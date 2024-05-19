@@ -1,0 +1,12 @@
+.invis_scroll {
+
+    scrollbar-width: none;
+
+}
+
+
+
+.invis_scroll ::-webkit-scrollbar {
+    display: none;
+}
+  
