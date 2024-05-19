@@ -2,19 +2,18 @@ import { useFormik } from "formik";
 import SearchBox from "../../utility/react/SearchBox";
 import Select from "../../components/form/Select";
 
-const Filter = () => {
-    const categories = ["alternator", "Engine parts", "Brake parts", "Wiper Blade"]
+const Filter = ({cat} : {cat:string |null}) => {
+    const categories = ["all","alternator", "Engine parts", "Brake parts", "Wiper Blade"]
     const formik = useFormik({
         initialValues: {
-            category: "all",
+            keyword: "",
+            category: cat?.toLowerCase() || "all",
             brand: "all",
-            price : 8000,
+            price : 2000,
         },
 
         onSubmit: values => {
-
             alert(JSON.stringify(values, null, 2));
-
         },
 
     });
@@ -28,9 +27,15 @@ const Filter = () => {
                 <h1 className="text-xl font-bold"> Category </h1>
                 <ul className="space-y-1 text-gray-500 text-lg">
                     {
-                        categories.map(cat => {
-                            return <li>
-                                {cat}
+                        categories.map(c => {
+                            return <li 
+                            className={`${formik.values.category==c.toLowerCase()?"text-primary":""} cursor-pointer hover:text-primary duration-300`}
+                            onClick={()=> {
+                                formik.setFieldValue("category",c);
+                                console.log(c);
+                            }}
+                            >
+                                {c}
                             </li>
                         })
                     }

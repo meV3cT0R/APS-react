@@ -3,6 +3,8 @@ import './App.css'
 import Home from './pages/Home'
 import RootLayout from './layouts/RootLayout'
 import Browse from './pages/Browse/Browse'
+import AboutUsPage from './pages/aboutUs/AboutUsPage'
+import ProductInfo from './pages/Browse/ProductInfo'
 
 function App() {
 
@@ -20,6 +22,14 @@ function App() {
             {
               path : "products",
               element : <Browse/>
+            },
+            {
+              path : "products/:id",
+              element : <ProductInfo/>
+            },
+            {
+              path : "about-us",
+              element : <AboutUsPage/>
             }
           ]
         }

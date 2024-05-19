@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
 import Select from "../../components/form/Select";
 import ProductCard from "./ProductCard";
+import { ProductType } from "./ProductType";
+import { Link } from "react-router-dom";
 
-const Prods = ()=> {
+const Prods = ({products} : {products : ProductType[]})=> {
+    
     const formik = useFormik({
         initialValues: {
             sortBy : "asc"
@@ -15,38 +18,7 @@ const Prods = ()=> {
         },
 
     });
-    const products = [ 
-        {
-            img : "",
-            title : "some random product you prolly wanna buy",
-            price : 445
-        },
-        {
-            img : "",
-            title : "some random product you prolly wanna buy",
-            price : 445
-        },
-        {
-            img : "",
-            title : "some random product you prolly wanna buy",
-            price : 445
-        },
-        {
-            img : "",
-            title : "some random product you prolly wanna buy",
-            price : 445
-        },
-        {
-            img : "",
-            title : "some random product you prolly wanna buy",
-            price : 445
-        },
-        {
-            img : "",
-            title : "some random product you prolly wanna buy",
-            price : 445
-        },
-    ]
+    
     return (
         <div className="flex flex-col w-full space-y-2 ">
             <div className="flex justify-between py-3 text-lg">
@@ -70,7 +42,7 @@ const Prods = ()=> {
 
             <div className="grid grid-cols-4 ">
                 {products.map(product=> {
-                    return <ProductCard key={JSON.stringify(product)} {...product}/>
+                    return <Link to={`${product.id}`}><ProductCard key={JSON.stringify(product)} {...product}/></Link>
                 })}
             </div>
         </div>

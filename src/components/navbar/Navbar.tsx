@@ -1,6 +1,7 @@
 import BrandLogo from "./BrandLogo";
 import { ShoppingCart } from "@mui/icons-material";
 import SearchBox from "../../utility/react/SearchBox";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -8,26 +9,30 @@ const Navbar = () => {
         {
             name: "Home",
             path: "/",
-        }, {
-            name: "Automobile spare parts",
-            path: "/autoparts"
-        }, {
-            name: "products",
-            path: "/products",
-        }, {
+        },
+         {
             name: "about us",
             path: "/about-us"
+        },
+        {
+            name: "products",
+            path: "/products",
         }
     ]
     return (
-        <div className=" flex py-5 items-center px-32 shadow">
+        <div className=" flex py-5 items-center px-32 shadow space-x-10">
             <BrandLogo />
             <ul>
                 {
                     links.map(link => {
-                        return <li className="inline-block text-lg py-2 px-4 hover:text-primary cursor-pointer duration-300">
+                        return <li className="inline-block ">
+                            <NavLink
+                                to={link.path}
+                                className={({isActive})=>`text-lg py-2 px-4 hover:text-primary cursor-pointer duration-300 ${isActive?"text-primary":""}`}
+                            >
 
                             {link.name}
+                            </NavLink>
 
                         </li>
                     })

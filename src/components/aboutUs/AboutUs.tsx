@@ -20,11 +20,11 @@ const AboutUs = () => {
                         </p>
                     </div>
 
-                    <div className="border-2 relative">
+                    <div className="relative">
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Gilles_Panizzi.jpg"
                             className="w-full h-[400px] object-cover object-top mx-auto rounded-3xl" />
-                            <div className="absolute inset-0 w-full h-full bg-black/40">
+                            <div className="absolute inset-0 w-full h-full bg-black/40 rounded-3xl">
 
                             </div>
                     </div>

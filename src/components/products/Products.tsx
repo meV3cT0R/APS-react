@@ -5,53 +5,14 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import "./products.css"
 import { useEffect, useRef, useState } from "react";
 import { noImage } from "../../utility/constants";
+import { products } from "../../dummy_data/products";
+import { ProductType } from "../../pages/Browse/ProductType";
+import { Link } from "react-router-dom";
 
 
 const Products = () => {
     const sliderRef = useRef<HTMLUListElement>(null);
     const [right, setRight] = useState<boolean>(true);
-    const products = [
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: "https://images.collectingcars.com/021553/DSC01008.jpg?w=1263&fit=fillmax&crop=edges&auto=format,compress&cs=srgb&q=85",
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-        {
-            img: noImage,
-            name: "Some Random Product",
-            price: "$500"
-        },
-    ]
 
 
     useEffect(() => {
@@ -76,7 +37,7 @@ const Products = () => {
                     }  
                 }
             }
-        }, 1000)
+        }, 3000)
 
         return () => {
             clearInterval(slide);
@@ -118,17 +79,20 @@ const Products = () => {
                     </button>
 
                     <ul ref={sliderRef} className="w-[95%] mx-auto flex overflow-x-scroll space-x-5 invis_scroll">
-                        {products.map(product => {
+                        {(products as ProductType[]).map(product => {
                             return <li key={JSON.stringify(product)}>
+                                <Link
+                                    to={`/products/${product.id}`}
+                                >
                                 <div className="w-[300px]">
                                     <img
-                                        src={product.img || noImage}
+                                        src={product.images[0] || noImage}
                                         className="w-[full] h-[300px] object-cover border" />
 
                                     <h1 className="text-xl"> {product.name}</h1>
                                     <p className="text-gray-500 text-lg"> {product.price}</p>
                                 </div>
-
+                                </Link>
                             </li>
                         })}
                     </ul>
