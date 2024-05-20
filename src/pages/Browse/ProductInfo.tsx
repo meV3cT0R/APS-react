@@ -1,12 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { products } from "../../dummy_data/products";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductType } from "./ProductType";
 import { Send, ShoppingCart } from "@mui/icons-material";
+import { GlobalContext } from "../../GlobalContext";
+import { CartItem } from "../../types/Cart";
 
 const ProductInfo = () => {
     const { id } = useParams();
+    const { cart, setCart } = useContext(GlobalContext);
 
+    const navigate = useNavigate();
     const product: ProductType | undefined = products.find(p => p.id == Number(id));
 
     const [imgIdx, setImgIdx] = useState(0);
@@ -51,6 +55,22 @@ const ProductInfo = () => {
                     <div className="space-x-5 py-10 bg-gray-100 px-10">
                         <button
                             className="border-2  capitalize border-primary text-primary hover:bg-primary hover:text-white hover:bg-primary rounded px-3 py-2"
+                            onClick={()=>{
+                                const val : CartItem | undefined = cart.find(c=>c.id==product.id);
+                                if(!val)
+                                    setCart([...cart,{...product,quantity:1}]);
+                                else {
+                                    setCart(cart.map(v=> {
+                                        if(v.id == val.id) 
+                                            return {
+                                                ...val,
+                                                quantity : val.quantity+1
+                                            }
+                                        return v;
+                                    }))
+                                }
+                                navigate("/cart");
+                            }}
                         >
                             <ShoppingCart className="" /> <span>Add to Cart</span>
                         </button>

@@ -1,7 +1,7 @@
 import BrandLogo from "./BrandLogo";
 import { ShoppingCart } from "@mui/icons-material";
 import SearchBox from "../../utility/react/SearchBox";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -46,7 +46,7 @@ const Navbar = () => {
                     <SearchBox/>
                 </div>
 
-                <button className="text-3xl hover:text-primary duration-300"> <ShoppingCart/> </button>
+                <Link  to="/cart" className="text-3xl hover:text-primary duration-300"> <ShoppingCart/> </Link>
             </div>
         </div>
     )

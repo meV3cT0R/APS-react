@@ -20,13 +20,15 @@ const AboutUs = () => {
                         </p>
                     </div>
 
-                    <div className="relative">
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Gilles_Panizzi.jpg"
-                            className="w-full h-[400px] object-cover object-top mx-auto rounded-3xl" />
-                            <div className="absolute inset-0 w-full h-full bg-black/40 rounded-3xl">
+                    <div className="flex items-center">
+                        <div className="relative">
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Gilles_Panizzi.jpg"
+                                className="w-full h-[400px] object-cover object-top mx-auto rounded-3xl" />
+                            <div className="absolute inset-0 w-full h-[400px] bg-black/40 rounded-3xl">
 
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>

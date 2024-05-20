@@ -2,17 +2,20 @@ import AboutUs from "../components/aboutUs/AboutUs";
 import AutoSpareParts from "../components/autoSpareParts/AutoSpareParts";
 import Carousel from "../components/carousel/Carousel";
 import Products from "../components/products/Products";
+import Wrapper from "../utility/react/Wrapper";
 
 const Home = () => {
     return (
         <div>
 
-            <div className="px-32">
+            <Wrapper >
+
                 <Carousel />
                 <AutoSpareParts />
                 <Products />
-                <AboutUs/>
-            </div>
+                <AboutUs />
+
+            </Wrapper>
 
         </div>
 
