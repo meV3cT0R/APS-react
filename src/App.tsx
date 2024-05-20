@@ -5,6 +5,8 @@ import RootLayout from './layouts/RootLayout'
 import Browse from './pages/Browse/Browse'
 import AboutUsPage from './pages/aboutUs/AboutUsPage'
 import ProductInfo from './pages/Browse/ProductInfo'
+import Login from './pages/login/Login'
+import Register from './pages/login/Register'
 
 function App() {
 
@@ -30,6 +32,14 @@ function App() {
             {
               path : "about-us",
               element : <AboutUsPage/>
+            },
+            {
+              path : "login",
+              element : <Login/>
+            },
+            {
+              path : "register",
+              element : <Register/>
             }
           ]
         }

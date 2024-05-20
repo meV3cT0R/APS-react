@@ -25,7 +25,7 @@ const Navbar = () => {
             <ul>
                 {
                     links.map(link => {
-                        return <li className="inline-block ">
+                        return <li className="inline-block capitalize">
                             <NavLink
                                 to={link.path}
                                 className={({isActive})=>`text-lg py-2 px-4 hover:text-primary cursor-pointer duration-300 ${isActive?"text-primary":""}`}

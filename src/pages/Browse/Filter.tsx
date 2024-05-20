@@ -29,7 +29,7 @@ const Filter = ({cat} : {cat:string |null}) => {
                     {
                         categories.map(c => {
                             return <li 
-                            className={`${formik.values.category==c.toLowerCase()?"text-primary":""} cursor-pointer hover:text-primary duration-300`}
+                            className={`${formik.values.category.toLowerCase()==c.toLowerCase()?"text-primary":""} cursor-pointer hover:text-primary duration-300`}
                             onClick={()=> {
                                 formik.setFieldValue("category",c);
                                 console.log(c);
