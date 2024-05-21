@@ -1,7 +1,5 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { products } from "../../dummy_data/products";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { ProductType } from "./ProductType";
 import { Send, ShoppingCart } from "@mui/icons-material";
 import { GlobalContext } from "../../GlobalContext";
 import { CartItem } from "../../types/Cart";
@@ -11,9 +9,11 @@ const ProductInfo = () => {
     const { cart, setCart } = useContext(GlobalContext);
 
     const navigate = useNavigate();
-    const product: ProductType | undefined = products.find(p => p.id == Number(id));
+
+    const data = useLoaderData();
 
     const [imgIdx, setImgIdx] = useState(0);
+    const product = data.data;
 
     if (!product) return;
 

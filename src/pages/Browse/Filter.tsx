@@ -1,22 +1,28 @@
-import { useFormik } from "formik";
+import { FormikProps } from "formik";
 import SearchBox from "../../utility/react/SearchBox";
 import Select from "../../components/form/Select";
+import { useEffect, useState } from "react";
+import { axiosGetData } from "../../utility/axios_util";
 
-const Filter = ({cat} : {cat:string |null}) => {
-    const categories = ["all","alternator", "Engine parts", "Brake parts", "Wiper Blade"]
-    const formik = useFormik({
-        initialValues: {
-            keyword: "",
-            category: cat?.toLowerCase() || "all",
-            brand: "all",
-            price : 2000,
-        },
+const Filter = ({formik,cat} : {formik :FormikProps<any>,cat?:string |null}) => {
+    const [categories,setCategories] = useState([]);
+    const [brands,setBrands] = useState([]);
+    
 
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-        },
+    useEffect(()=> {
+        const func = async ()=> {
+            axiosGetData("getCategories").then(val=>{console.log(val);setCategories(val.data)}).catch(err=>console.log(err));
+            axiosGetData("getBrands").then(val=>{console.log(val);setBrands(val.data)}).catch(err=>console.log(err));
+       
+        }
 
-    });
+        func();
+    },[])
+
+    const brandObj = {};
+
+    brands.map(brand=> brandObj[brand]=brand);
+    console.log(brandObj);
     return (
         <div className="flex flex-col w-[200px] space-y-10">
             <div>
@@ -45,11 +51,7 @@ const Filter = ({cat} : {cat:string |null}) => {
             <div className="space-y-2">
                 <h1 className="text-xl font-bold"> Brand </h1>
                 <Select formik={formik} name="brand" map={
-                    {
-                        BMW: "BMW",
-                        BMW2: "BMW",
-                        BMW3: "BMW",
-                    }
+                    brandObj
                 }
                 />
             </div>
@@ -57,7 +59,7 @@ const Filter = ({cat} : {cat:string |null}) => {
             <div className="space-y-2">
                 <h1 className="text-xl font-bold"> Price </h1>
                 <p id="output">$ {formik.values.price}</p>
-                <input type="range" min="1" max="4100"
+                <input type="range" min="1" max="10100"
                     value={formik.values.price }
                     className="cursor-pointer"
                     onInput={(e) => {

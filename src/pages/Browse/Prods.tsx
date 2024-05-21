@@ -1,10 +1,10 @@
-import { useFormik } from "formik";
+import { FormikProps, useFormik } from "formik";
 import Select from "../../components/form/Select";
 import ProductCard from "./ProductCard";
 import { ProductType } from "./ProductType";
 import { Link } from "react-router-dom";
 
-const Prods = ({products} : {products : ProductType[]})=> {
+const Prods = ({products,filter} : {products : ProductType[],filter : FormikProps<any>})=> {
     
     const formik = useFormik({
         initialValues: {
@@ -41,7 +41,12 @@ const Prods = ({products} : {products : ProductType[]})=> {
             </div>
 
             <div className="grid grid-cols-4 ">
-                {products.map(product=> {
+                {products.filter(prod=>prod.price <= filter.values.price ).sort((a,b)=> {
+                    if(formik.values.sortBy=="asc") 
+                        return a.price-b.price;
+                    else
+                        return b.price-a.price;
+                }).map(product=> {
                     return <Link to={`${product.id}`}><ProductCard key={JSON.stringify(product)} {...product}/></Link>
                 })}
             </div>

@@ -11,7 +11,10 @@ import Cart from './pages/cart/Cart'
 import { GlobalContext } from './GlobalContext'
 import { useState } from 'react'
 import { ProductType } from './pages/Browse/ProductType'
+import { axiosGetData } from './utility/axios_util'
+import axios from 'axios'
 
+axios.defaults.baseURL = 'http://localhost:8080/api/';
 
 function App() {
 
@@ -35,6 +38,9 @@ function App() {
             },
             {
               path: "products/:id",
+              loader : async({params})=> {
+                  return axiosGetData(`getAllProducts/${params.id}`);
+              },
               element: <ProductInfo />
             },
             {
