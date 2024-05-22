@@ -13,7 +13,6 @@ const Filter = ({formik,cat} : {formik :FormikProps<any>,cat?:string |null}) => 
         const func = async ()=> {
             axiosGetData("getCategories").then(val=>{console.log(val);setCategories(val.data)}).catch(err=>console.log(err));
             axiosGetData("getBrands").then(val=>{console.log(val);setBrands(val.data)}).catch(err=>console.log(err));
-       
         }
 
         func();

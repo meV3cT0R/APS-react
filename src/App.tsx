@@ -9,19 +9,51 @@ import Login from './pages/login/Login'
 import Register from './pages/login/Register'
 import Cart from './pages/cart/Cart'
 import { GlobalContext } from './GlobalContext'
-import { useState } from 'react'
-import { ProductType } from './pages/Browse/ProductType'
+import { useEffect, useState } from 'react'
 import { axiosGetData } from './utility/axios_util'
 import axios from 'axios'
+import { CartItem } from './types/Cart'
+import AdminLayout from './layouts/AdminLayout'
+import AdminProducts from './pages/admin/products/AdminProducts'
+import ProductLoader from './pages/admin/products/ProductLoader'
+import productLoader from './pages/admin/products/ProductLoader'
+import AddProducts from './pages/admin/products/AddProducts'
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
 function App() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [user, setUser] = useState<any>();
 
-  const [cart, setCart] = useState<ProductType[]>([]);
+
+  useEffect(() => {
+    const func = async () => {
+      const res = await axios
+        .post("loginWithToken", {
+          token
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then(val => {
+          console.log(val);
+          setToken(token);
+          setUser(val.data);
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+      return res;
+    }
+    if (token) {
+      func();
+    }
+  }, []);
   return (
     <GlobalContext.Provider value={
-      { cart, setCart }
+      { cart, setCart, token, setToken,user,setUser }
     }>
       <RouterProvider router={createBrowserRouter([
         {
@@ -38,8 +70,8 @@ function App() {
             },
             {
               path: "products/:id",
-              loader : async({params})=> {
-                  return axiosGetData(`getAllProducts/${params.id}`);
+              loader: async ({ params }) => {
+                return axiosGetData(`getAllProducts/${params.id}`);
               },
               element: <ProductInfo />
             },
@@ -58,6 +90,27 @@ function App() {
             {
               path: "cart",
               element: <Cart />
+            }
+          ]
+        }, 
+        {
+          path : "admin",
+          element : <AdminLayout/>,
+          children:[
+            {
+              path : "products",
+              children : [
+                {
+                  path : "",
+                  loader: productLoader,
+                  element : <AdminProducts/>
+                },
+                {
+                  path : "add",
+
+                  element : <AddProducts/>
+                },
+              ]
             }
           ]
         }

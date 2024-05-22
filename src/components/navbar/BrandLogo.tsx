@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-
-const BrandLogo = ()=> {
+import apslogo from "../../assets/apslogo.png";
+const BrandLogo = ({className}: {className:string})=> {
     return (
-        <div className="">
-            <Link to=""><h1 className="text-3xl text-primary"> APS </h1></Link>
+        <div className={`${className}`}>
+            <Link to=""><img src={apslogo} className="w-[75px] h-[75px] "/> </Link>
         </div>
     )
 }
