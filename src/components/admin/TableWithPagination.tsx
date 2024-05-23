@@ -28,7 +28,7 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
         return [];
     }
     useEffect(() => {
-        // setFilteredData(handleData());
+        setFilteredData(handleData());
     }, [page, entries, datas]);
 
     useEffect(()=> {

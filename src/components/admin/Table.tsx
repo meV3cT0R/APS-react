@@ -7,6 +7,7 @@ import { TableProps } from "./TableProps";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { noImage } from "../../utility/constants";
 
 
 function Td({
@@ -144,7 +145,7 @@ export default function Table({
                             />
                           )) || (
                             <img
-                              src={"https://images.wondershare.com/repairit/aticle/2021/07/resolve-images-not-showing-problem-1.jpg"}
+                              src={noImage}
                               className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
                             />
                           )}
@@ -186,6 +187,7 @@ export default function Table({
                         <button
                           className="text-green-500 text-3xl"
                           onClick={() => {
+                            console.log(data);
                             navigate((editPath?editPath:`edit/`)+data["id"]
                             );
                           }}

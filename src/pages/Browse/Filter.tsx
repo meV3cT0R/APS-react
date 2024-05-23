@@ -21,11 +21,11 @@ const Filter = ({formik,cat} : {formik :FormikProps<any>,cat?:string |null}) => 
     const brandObj = {};
 
     brands.map(brand=> brandObj[brand]=brand);
-    console.log(brandObj);
+    console.log(formik.values.category);
     return (
         <div className="flex flex-col w-[200px] space-y-10">
             <div>
-                <SearchBox />
+                <SearchBox formik={formik} name="keyword" />
             </div>
 
             <div className="space-y-2">
@@ -34,13 +34,13 @@ const Filter = ({formik,cat} : {formik :FormikProps<any>,cat?:string |null}) => 
                     {
                         categories.map(c => {
                             return <li 
-                            className={`${formik.values.category.toLowerCase()==c.toLowerCase()?"text-primary":""} cursor-pointer hover:text-primary duration-300`}
+                            className={`${formik.values.category.toLowerCase()==c.name.toLowerCase()?"text-primary":""} cursor-pointer hover:text-primary duration-300`}
                             onClick={()=> {
-                                formik.setFieldValue("category",c);
-                                console.log(c);
+                                formik.setFieldValue("category",c.name);
+                                console.log(c.name);
                             }}
                             >
-                                {c}
+                                {c.name}
                             </li>
                         })
                     }

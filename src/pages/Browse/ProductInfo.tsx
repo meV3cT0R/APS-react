@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Send, ShoppingCart } from "@mui/icons-material";
 import { GlobalContext } from "../../GlobalContext";
 import { CartItem } from "../../types/Cart";
+import { imageURL } from "../../utility/constants";
 
 const ProductInfo = () => {
     const { id } = useParams();
@@ -27,7 +28,7 @@ const ProductInfo = () => {
             <div className=" flex shadow-xl">
                 <div className="flex flex-col  px-10 py-10 flex-2">
                     <div>
-                        <img src={product.images[imgIdx]} className="object-cover w-[500px] h-[500px] rounded-lg"  />
+                        <img src={imageURL+product.images[imgIdx]} className="object-cover w-[500px] h-[500px] rounded-lg"  />
                     </div>
                     <div className="flex flex-grow">
 
@@ -35,7 +36,7 @@ const ProductInfo = () => {
                     <div className="flex  overflow-x-scroll">
                         {product.images.map((img, i) => {
                             return <img
-                                src={img}
+                                src={imageURL+img}
                                 className={`w-[100px] h-[100px] object-cover border-4 cursor-pointer ${imgIdx == i ? " border-primary" : ""}`}
 
                                 onClick={() => {

@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import SearchIcon from '@mui/icons-material/Search';
+import { FormikProps } from "formik";
 
-const SearchBox = ()=> {
+const SearchBox = ({formik,name}: {formik:FormikProps<any>, name:string})=> {
     const searchRef = useRef<HTMLFormElement>(null);
     const butRef = useRef<HTMLButtonElement>(null);
 
@@ -22,6 +23,10 @@ const SearchBox = ()=> {
             if (butRef.current)
                 butRef.current.classList.remove("text-primary")
         }}
+
+        name={name}
+        value={formik.values[name]}
+        onChange={formik.handleChange}
     />
     <button className="hover:text-primary duration-300" ref={butRef}> <SearchIcon /> </button>
 </form>

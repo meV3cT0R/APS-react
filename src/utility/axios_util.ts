@@ -39,8 +39,6 @@ export async function axiosDeleteData(url:string,token:string) {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
-      XRCorsToken: "xK3#pR*8sZ@1tYq9",
-      // "type":"formData"
     },
   }).catch(_=>{
     Swal.fire({
@@ -51,4 +49,45 @@ export async function axiosDeleteData(url:string,token:string) {
     });
   });
   return res;
+}
+
+export async function axiosPostDataV2(url: string, data: any, navigate: string,token:string) {
+  const formData = new FormData();
+  Object.keys(data).forEach((key) => {
+    console.log(`${key} : ${data[key]}`)
+    if (key == "files"|| key=="imageList") {
+      data[key].map((file:any) => {
+        console.log(file);
+        formData.append("imageList", file);
+      })
+    } else
+      formData.append(key, data[key])
+  })
+
+  const res = await axios.post(url, formData, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    }
+
+  }).catch(error => {
+    throw new Error(error);
+  });
+
+  if (res) {
+    if (res.status >= 200 && res.status < 300) {
+      Swal.fire({
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    console.log(navigate);
+
+    }
+  }
+  return res;
+}
+
+export async function axiosPostData(url: string, data: any,token :string) {
+    return await axiosPostDataV2(url,data,"",token);
 }

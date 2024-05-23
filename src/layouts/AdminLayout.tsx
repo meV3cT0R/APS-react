@@ -16,34 +16,33 @@ const AdminLayout = () => {
   const { user, setUser, token } = useGlobalContext();
   const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const func = async () => {
-//       if(!token) navigate("/login");
+  useEffect(() => {
+    const func = async () => {
+      if(!token) navigate("/login");
 
-//       await axios.post("auth/login-system-user-with-token", {
-//       }, {
-//         headers: {
-//           "Authorization": `Bearer ${token}`,
-//           "Accept": "*/*",
-//           "XRCorsToken": "xK3#pR*8sZ@1tYq9",
-//           "Access-Control-Allow-Origin": "*"
-//         }
-//       }).then(res => {
-//         if (setUser) {
-//           setUser(res.data.data)
-//         }
-//       }).catch(_ => {
-//         navigate("/login")
-//       })
+      await axios.post("/loginWithToken", {
+        token
+      }, {
+        headers: {
+          "Accept": "*/*",
+        }
+      }).then(res => {
+        console.log(res);
+        if (setUser) {
+          setUser(res.data)
+        }
+      }).catch(_ => {
+        navigate("/login")
+      })
 
-//     }
-//     if (!user)
-//       func();
-//   }, [])
+    }
+    if (!user)
+      func();
+  }, [])
 
-//   if (!user) {
-//     return "Loading..."
-//   }
+  if (!token || !user) {
+    return "Loading..."
+  }
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark ">
 

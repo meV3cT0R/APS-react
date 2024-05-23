@@ -56,12 +56,10 @@ const MultipleFileUpload = ({
                 className="absolute top-2 right-2 text-red-500 text-xl cursor-pointer"
 
                 onClick={()=>{
-                  const obj = {
 
-                  }
-                  formik.values[name].filter((f : string)=>f!=file)
+                  
 
-                  formik.setFieldValue(name,obj)
+                  formik.setFieldValue(name,formik.values[name].filter((f : string)=>f!=file))
                   
                 }}
                 />

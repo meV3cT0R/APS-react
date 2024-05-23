@@ -4,16 +4,16 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import "./products.css"
 import { useEffect, useRef, useState } from "react";
-import { noImage } from "../../utility/constants";
-import { products } from "../../dummy_data/products";
+import { imageURL, noImage } from "../../utility/constants";
 import { ProductType } from "../../pages/Browse/ProductType";
 import { Link } from "react-router-dom";
+import { axiosGetData } from "../../utility/axios_util";
 
 
 const Products = () => {
     const sliderRef = useRef<HTMLUListElement>(null);
     const [right, setRight] = useState<boolean>(true);
-
+    const [products,setProducts] = useState<any[] | null>(null);
 
     useEffect(() => {
         const slide = setInterval(() => {
@@ -23,26 +23,37 @@ const Products = () => {
                         left: sliderRef.current.scrollLeft + 300,
                         behavior: 'smooth'
                     })
-                    console.log("Scroll Left Value:"+sliderRef.current.scrollLeft);
-                    if(sliderRef.current.scrollLeft+sliderRef.current.clientWidth>sliderRef.current.clientWidth) {
+                    if (sliderRef.current.scrollLeft + sliderRef.current.clientWidth > sliderRef.current.clientWidth) {
                         setRight(false);
                     }
-                }else {
+                } else {
                     sliderRef.current.scrollTo({
                         left: sliderRef.current.scrollLeft - 300,
                         behavior: 'smooth'
                     })
-                    if(sliderRef.current.scrollLeft==0) {
+                    if (sliderRef.current.scrollLeft == 0) {
                         setRight(true);
-                    }  
+                    }
                 }
             }
         }, 3000)
-
+        
         return () => {
             clearInterval(slide);
         }
     }, [right]);
+
+    useEffect(()=> {
+        const func = async () => {
+            axiosGetData("getAllProducts").then(val => {
+                console.log(val);
+                setProducts(val.data);
+            }).catch(err => console.log(err));
+        }
+
+        func();
+    },[])
+    if(!products) return "Loading...";
     return (
         <Container>
             <div>
@@ -84,14 +95,14 @@ const Products = () => {
                                 <Link
                                     to={`/products/${product.id}`}
                                 >
-                                <div className="w-[300px]">
-                                    <img
-                                        src={product.images[0] || noImage}
-                                        className="w-[full] h-[300px] object-cover border" />
+                                    <div className="w-[300px]">
+                                        <img
+                                            src={imageURL+product?.images[0] || noImage}
+                                            className="w-[full] h-[300px] object-cover border" />
 
-                                    <h1 className="text-xl"> {product.name}</h1>
-                                    <p className="text-gray-500 text-lg"> {product.price}</p>
-                                </div>
+                                        <h1 className="text-xl"> {product.name}</h1>
+                                        <p className="text-gray-500 text-lg"> {product.price}</p>
+                                    </div>
                                 </Link>
                             </li>
                         })}

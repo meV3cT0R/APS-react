@@ -52,10 +52,10 @@ const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebar
         <div className={`h-full fixed left-0 border-2 shadow-xl bg-white overflow-x-visible overflow-y-scroll  invis_scroll duration-300 ${sidebarOpen?"z-[99999] w-[300px]":"z-[99] lg:w-[100px] w-[0px]"}`} ref={ref}>
             <div className="h-[80px] ">
                 <div className={`flex justify-between px-3  py-3 items-center ${sidebarOpen?"":"hidden"}`}>
-                    <BrandLogo className="border text-center border-primary"/>
+                    <BrandLogo className=" text-center "/>
                     <button
                     onClick={()=>{if(setSidebarOpen)setSidebarOpen(!sidebarOpen)}}
-                        className="px-5 py-5 text-3xl mt-1"
+                        className="px-5 text-4xl "
                     > 
 
                         <FontAwesomeIcon icon={faAngleLeft}/>

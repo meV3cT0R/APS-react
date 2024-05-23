@@ -18,6 +18,8 @@ import AdminProducts from './pages/admin/products/AdminProducts'
 import ProductLoader from './pages/admin/products/ProductLoader'
 import productLoader from './pages/admin/products/ProductLoader'
 import AddProducts from './pages/admin/products/AddProducts'
+import SingleProductLoader from './pages/admin/products/SingleProductLoader'
+import EditProducts from './pages/admin/products/EditProducts'
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
@@ -109,6 +111,11 @@ function App() {
                   path : "add",
 
                   element : <AddProducts/>
+                },
+                {
+                  path : "edit/:id",
+                  loader:SingleProductLoader,
+                  element : <EditProducts/>
                 },
               ]
             }

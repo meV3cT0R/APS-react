@@ -29,7 +29,11 @@ const Login = () => {
                     console.log(val);
                     setToken(val.data);
                     localStorage.setItem("token",val.data);
-                    navigate("/products");
+                    if(val.data.role.toLowerCase()=="admin")
+                        navigate("/admin/products");
+                    else 
+                        navigate("/products");
+
                 })
                 .catch((error) => {
                     throw new Error(error);
@@ -50,7 +54,10 @@ const Login = () => {
                 .then(val=>{
                     console.log(val);
                     setToken(token);
-                    navigate("/products");
+                    if(val.data.role.toLowerCase()=="admin")
+                        navigate("/admin/products");
+                    else 
+                        navigate("/products");
                 })
                 .catch((error) => {
                     throw new Error(error);
