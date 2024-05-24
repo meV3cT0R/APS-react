@@ -4,8 +4,10 @@ import MultipleFileUpload from "../../../components/form/MultipleFileUpload";
 import Button from "../../../components/form/Button";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
-import { axiosPostData } from "../../../utility/axios_util";
+import { axiosGetData, axiosPostData } from "../../../utility/axios_util";
 import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import Select from "../../../components/form/Select";
 
 const EditProducts = ()=> {
     const { token } = useGlobalContext();
@@ -16,7 +18,7 @@ const EditProducts = ()=> {
             name : res.data.name,
             price : res.data.price,
             imageList : res.data.images,
-            category : res.data.category,
+            category : res.data.category.id,
             specs : res.data.specs || {}
         },
         async onSubmit(values) {
@@ -38,8 +40,19 @@ const EditProducts = ()=> {
             }
         }
     })
+    const [category,setCategory] = useState<any[]>([]);
 
+    useEffect(()=> {
+        const func = async ()=> {
+                axiosGetData("getCategories").then(val=> {
+                    setCategory(val.data);
+                }).catch(err=>console.log(err));
+        }
 
+        func();
+    },[])
+    const catObj :any = {};
+    category.map(cat=> catObj[cat.id]=cat.name);
     return (
         <div>
             <form onSubmit={formik.handleSubmit} className="max-w-[800px] mx-auto">
@@ -49,7 +62,8 @@ const EditProducts = ()=> {
 
                 <TextField formik={formik} label="Name" type="text" name="name"/>
                 <TextField formik={formik} label="Price" type="number" name="price"/>
-                <TextField formik={formik} label="Category" type="text" name="category" className="col-span-full"/>
+                <Select formik={formik} label="Category" map={catObj} name={"category"}/>
+
                 <MultipleFileUpload formik={formik} label="Images" name="imageList" />
 </div>
                 <Button text="Update"/>

@@ -2,14 +2,19 @@ import { useFormik } from "formik";
 import TextField from "../../../components/form/TextField";
 import MultipleFileUpload from "../../../components/form/MultipleFileUpload";
 import Button from "../../../components/form/Button";
-import { axiosPostData } from "../../../utility/axios_util";
+import { axiosGetData, axiosPostData } from "../../../utility/axios_util";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Select from "../../../components/form/Select";
+import { useEffect, useState } from "react";
 
 const AddProducts = () => {
     const { token } = useGlobalContext();
     const navigate = useNavigate();
+
+    const [category,setCategory] = useState<any[]>([]);
+    
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -33,6 +38,18 @@ const AddProducts = () => {
             }
         }
     })
+
+    useEffect(()=> {
+        const func = async ()=> {
+                axiosGetData("getCategories").then(val=> {
+                    setCategory(val.data);
+                }).catch(err=>console.log(err));
+        }
+
+        func();
+    },[])
+    const catObj :any = {};
+    category.map(cat=> catObj[cat.id]=cat.name);
     return (
         <div>
             <form onSubmit={formik.handleSubmit} className="max-w-[800px] mx-auto">
@@ -42,7 +59,7 @@ const AddProducts = () => {
 
                     <TextField formik={formik} label="Name" type="text" name="name" />
                     <TextField formik={formik} label="Price" type="number" name="price" />
-                    <TextField formik={formik} label="Category" type="text" name="category" className="col-span-full" />
+                    <Select formik={formik} label="Category" map={catObj} name={"category"}/>
                     <MultipleFileUpload formik={formik} label="Images" name="imageList" />
                 </div>
                 <Button text="Add" />

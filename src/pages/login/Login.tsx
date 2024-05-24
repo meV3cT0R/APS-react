@@ -38,6 +38,7 @@ const Login = () => {
                 .catch((error) => {
                     throw new Error(error);
                 });
+            return res;
         }
     })
 
@@ -62,6 +63,7 @@ const Login = () => {
                 .catch((error) => {
                     throw new Error(error);
                 });
+                return res;
         }
         if(token) {
             func();

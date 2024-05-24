@@ -21,7 +21,7 @@ import AddProducts from './pages/admin/products/AddProducts'
 import SingleProductLoader from './pages/admin/products/SingleProductLoader'
 import EditProducts from './pages/admin/products/EditProducts'
 
-axios.defaults.baseURL = 'http://localhost:8080/api/';
+axios.defaults.baseURL = 'http://192.168.1.8:8080/api/';
 
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);

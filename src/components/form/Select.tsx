@@ -35,6 +35,8 @@ const Select = ({formik,name,displayName,map,label,className}: {
             document.body.removeEventListener("click",onClick);
         }
     },[])
+
+    
     return <div
         className={childInputDivStyle}
         ref={selRef}
