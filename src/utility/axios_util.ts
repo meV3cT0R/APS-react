@@ -23,7 +23,6 @@ export async function axiosPostJsonData(url: string, data: any, token: string) {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        XRCorsToken: "xK3#pR*8sZ@1tYq9",
         // "type":"formData"
       },
     })

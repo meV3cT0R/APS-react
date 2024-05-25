@@ -7,7 +7,7 @@ import { TableProps } from "./TableProps";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
-import { noImage } from "../../utility/constants";
+import { imageURL, noImage } from "../../utility/constants";
 
 
 function Td({
@@ -141,7 +141,7 @@ export default function Table({
                         <Td key={JSON.stringify(data[key]) + i + i}>
                           {(data[key].url && (
                             <img
-                              src={data[key].url}
+                              src={data[key].url.startsWith("http") && data[key].url || imageURL+data[key].url}
                               className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
                             />
                           )) || (
@@ -213,9 +213,7 @@ export default function Table({
                                     await axios
                                       .delete(`${deleteURL}/${data["id"]}`, {
                                         headers: {
-                                          Authorization:
-                                            "Bearer " +token,
-                                          XRCorsToken: XCORSToken,
+                                          Authorization:"Bearer " +token,
                                         },
                                       })
                                       .then((_) => {

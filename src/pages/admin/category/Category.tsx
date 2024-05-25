@@ -1,5 +1,6 @@
 import { Outlet, useLoaderData } from "react-router-dom";
 import TableWithPagination from "../../../components/admin/TableWithPagination";
+import { TableObjectType } from "../../../components/admin/types";
 
 const Category = ()=> {
 
@@ -15,9 +16,14 @@ const Category = ()=> {
                 return {
                     "id" : data.id,
                     "name" : data.name,
-                    "image" : data.image
+                    "image" : {
+                        url: data.image,
+                        type:TableObjectType.IMAGE
+                    }
                 }
             })}
+            deleteURL="admin/deleteCategory"
+            afterDeletePath="/admin/category"
         />
     </div>
     </>

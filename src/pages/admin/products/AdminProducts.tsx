@@ -11,16 +11,19 @@ const AdminProducts = ()=> {
         <div>
 
             <TableWithPagination
-                    columns={["name","category","price"]}
+                    columns={["name","category","price","specs"]}
                     avoidColumns={["id"]}
                     datas={res && (res as any).data.map((data :any)=> {
                         return {
                             "id" : data.id,
                             "name" : data.name,
-                            "cat" : data.category,
-                            "price" : data.price
+                            "cat" : data.category.name,
+                            "price" : data.price,
+                            "specs" : JSON.stringify(data.specs)
                         }
                     })}
+                    deleteURL="admin/deleteProduct"
+                    afterDeletePath="/admin/products"
             />
             <FAB style="bottom-10 right-10" to="add" icon={faPlus}/>
         </div>

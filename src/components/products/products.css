@@ -10,3 +10,31 @@
     display: none;
 }
   
+
+.arrow_box {
+	background: var(--primary);
+	border: 1px solid var(--primary);
+}
+.arrow_box:after, .arrow_box:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(185, 28, 28, 0);
+	border-right-color: var(--primary);
+	border-width: 11px;
+	margin-top: -11px;
+}
+.arrow_box:before {
+	border-color: rgba(185, 28, 28, 0);
+	border-right-color: var(--primary);
+	border-width: 12px;
+	margin-top: -12px;
+}

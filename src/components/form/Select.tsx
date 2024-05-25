@@ -66,7 +66,7 @@ const Select = ({formik,name,displayName,map,label,className}: {
                 className={`absolute styled-scrollbars overflow-y-scroll max-h-[200px] shadow-xl bg-white w-full duration-300 ${showDropdown ? " translate-y-0 opacity-100 z-10" : " -translate-y-[20px] opacity-0 z-[-1]"}`}
 
             >
-                {Object.keys(map).map((key) => {
+                {Object.keys(map).map((key,i) => {
                     return (
                         <li
                             className="w-full p-5 hover:bg-gray-100 cursor-pointer border bg-slate-100 capitalize"
@@ -74,7 +74,7 @@ const Select = ({formik,name,displayName,map,label,className}: {
                                 formik.setFieldValue(name,key)
                                 setShowDropdown(false);
                             }}
-                            key={JSON.stringify(map[key])}
+                            key={JSON.stringify(map[key])+i}
                         >
                             {map[key]}
                         </li>

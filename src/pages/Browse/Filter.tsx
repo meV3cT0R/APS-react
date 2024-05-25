@@ -34,6 +34,7 @@ const Filter = ({formik,cat} : {formik :FormikProps<any>,cat?:string |null}) => 
                     {
                         categories.map(c => {
                             return <li 
+                            key={JSON.stringify(c)}
                             className={`${formik.values.category.toLowerCase()==c.name.toLowerCase()?"text-primary":""} cursor-pointer hover:text-primary duration-300`}
                             onClick={()=> {
                                 formik.setFieldValue("category",c.name);

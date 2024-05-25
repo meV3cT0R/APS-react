@@ -27,6 +27,7 @@ const AutoSpareParts = () => {
                 <div className="grid grid-cols-4 gap-4 ">
                     {partsTypes.map(type=> {
                         return <NavLink 
+                                key={JSON.stringify(type)}
                                 to={"/products/?cat="+type.name}
                                 className="flex flex-col items-center cursor-pointer">
                                 <img className="border-2 h-[300px] object-cover" src={type.image.startsWith("http") && type.image || imageURL+type.image || noImage} alt={type.title}/>

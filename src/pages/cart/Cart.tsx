@@ -2,13 +2,16 @@ import { useContext } from "react";
 import Container from "../../utility/react/Container";
 import Wrapper from "../../utility/react/Wrapper";
 import { GlobalContext } from "../../GlobalContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LinkButton from "../../utility/react/LinkButton";
-import { Add, PlusOne, Remove } from "@mui/icons-material";
+import { Add, Remove } from "@mui/icons-material";
+import { axiosPostJsonData } from "../../utility/axios_util";
+import Swal from "sweetalert2";
 
 const Cart = () => {
-    const { cart, setCart } = useContext(GlobalContext);
+    const { cart, setCart,token } = useContext(GlobalContext);
     const columns = ["description", "price", "quantity", "remove"];
+    const navigate = useNavigate();
     return (
         <Container>
             <Wrapper >
@@ -53,37 +56,37 @@ const Cart = () => {
                                                             {c.price}
                                                         </td>
                                                         <td className="px-4 py-10 flex items-center justify-center">
-                                                            <button 
-                                                            className="flex w-[25px] h-[25px] bg-primary text-white items-center"
-                                                            onClick={()=> {
-                                                                setCart(cart.map(v=> {
-                                                                    if(v.id == c.id && c.quantity>1) 
-                                                                        return {
-                                                                            ...c,
-                                                                            quantity : c.quantity-1
-                                                                        }
-                                                                    return v;
-                                                                }))
-                                                            }}
+                                                            <button
+                                                                className="flex w-[25px] h-[25px] bg-primary text-white items-center"
+                                                                onClick={() => {
+                                                                    setCart(cart.map(v => {
+                                                                        if (v.id == c.id && c.quantity > 1)
+                                                                            return {
+                                                                                ...c,
+                                                                                quantity: c.quantity - 1
+                                                                            }
+                                                                        return v;
+                                                                    }))
+                                                                }}
                                                             >
-                                                                <Remove className=""/>
+                                                                <Remove className="" />
                                                             </button>
 
                                                             <div className="w-[25px] h-[25px] border-2 flex items-center justify-center"><div className="">{c.quantity}</div></div>
 
 
-                                                            <button 
-                                                            className="flex w-[25px] h-[25px] bg-primary text-white items-center"
-                                                            onClick={()=> {
-                                                                setCart(cart.map(v=> {
-                                                                    if(v.id == c.id) 
-                                                                        return {
-                                                                            ...c,
-                                                                            quantity : c.quantity+1
-                                                                        }
-                                                                    return v;
-                                                                }))
-                                                            }}
+                                                            <button
+                                                                className="flex w-[25px] h-[25px] bg-primary text-white items-center"
+                                                                onClick={() => {
+                                                                    setCart(cart.map(v => {
+                                                                        if (v.id == c.id)
+                                                                            return {
+                                                                                ...c,
+                                                                                quantity: c.quantity + 1
+                                                                            }
+                                                                        return v;
+                                                                    }))
+                                                                }}
                                                             >
                                                                 <Add className="" />
                                                             </button>
@@ -114,7 +117,34 @@ const Cart = () => {
                                     </div>
                                     <div className="flex flex-col items-end">
                                         <LinkButton text="Continue Shopping" to="/products" className="w-[400px]" />
-                                        <LinkButton text="Checkout" to="/products" className="w-[400px]" />
+                                        <button 
+                                            onClick={()=> {
+                                                if(token)
+                                                    axiosPostJsonData("/user/checkOutItems",{
+                                                            cartItems : cart.map(c=> {
+                                                                return {
+                                                                    quantity : c.quantity,
+                                                                    productId : c.id,
+                                                                }
+                                                            })
+                                                    },token).then(_=>{
+                                                        Swal.fire({
+                                                            icon:"success",
+                                                            text:"Thank you for purchasing",
+                                                        })
+                                                        navigate("/products")
+                                                        setCart([]);
+                                                    }).catch(err=>Swal.fire({
+                                                        icon: "error",
+                                                        title: "Oops...",
+                                                        text: err,
+                                                      }));
+                                                    
+                                            }}
+                                            className={`mt-10 text-xl border-2 border-primary px-5 py-2  capitalize w-[400px] rounded text-primary hover:bg-primary hover:text-white duration-300`}
+                                        >
+                                            check out
+                                        </button>
 
                                     </div>
                                 </>

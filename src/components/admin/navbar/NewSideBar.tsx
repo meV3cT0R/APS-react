@@ -80,7 +80,7 @@ const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebar
                         key={JSON.stringify(link) + i}
                         to={link.path}
                         className={({ isActive }) => {
-                            const style = "relative navlink px-5 md:px-11 py-5 w-full overflow-x-visible capitalize hover:text-primary duration-300 flex items-center space-x-5 whitespace-nowrap";
+                            const style = "relative navlink px-5  md:px-8 py-5 w-full overflow-x-visible capitalize hover:text-primary duration-300 flex items-center space-x-5 whitespace-nowrap";
                             return isActive ? `${style} bg-slate-100 text-primary` : `${style} text-secondary`;
                         }}
 
@@ -92,7 +92,7 @@ const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebar
                             
                         }}
                     >
-                        <span><FontAwesomeIcon icon={link.icon} className="text-2xl"/></span>
+                        <span><FontAwesomeIcon icon={link.icon} className="text-2xl text-center"/></span>
                         {sidebarOpen && <span> {link.name}</span>}
                         {!sidebarOpen && <div 
                         className={`fixed text-xs left-20  arrow_box duration-300  text-white px-5 py-1 ${visible?" translate-x-0 opacity-100 ":"translate-x-full opacity-0 pointer-events-none"}`}
