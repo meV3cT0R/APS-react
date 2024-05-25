@@ -6,8 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 const AdminProducts = ()=> {
     const res= useLoaderData();
 
-    console.log("admin products");
-    console.log()
+
     return (
         <div>
 

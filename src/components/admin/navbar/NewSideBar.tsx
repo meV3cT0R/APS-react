@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, forwardRef,  useState } from "react";
 
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition, faAngleLeft, faShop } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition, faAngleLeft, faCat, faPerson, faShop } from "@fortawesome/free-solid-svg-icons";
 import BrandLogo from "../../navbar/BrandLogo";
 import "../../products/products.css"
 
@@ -12,11 +12,22 @@ const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebar
         path: string;
         icon: IconDefinition
     }[] = [
+        {
+            name: "category",
+            path: "/admin/category",
+            icon: faCat
+        },
             {
                 name: "products",
                 path: "/admin/products",
                 icon: faShop
             },
+            
+            {
+                name: "users",
+                path: "/admin/users",
+                icon: faPerson
+            },            
         ]
     return (
         // <div className="z-[99999]" ref={ref}>
@@ -51,7 +62,7 @@ const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebar
         // </div>
         <div className={`h-full fixed left-0 border-2 shadow-xl bg-white overflow-x-visible overflow-y-scroll  invis_scroll duration-300 ${sidebarOpen?"z-[99999] w-[300px]":"z-[99] lg:w-[100px] w-[0px]"}`} ref={ref}>
             <div className="h-[80px] ">
-                <div className={`flex justify-between px-3  py-3 items-center ${sidebarOpen?"":"hidden"}`}>
+                <div className={`flex justify-between md:pl-8 px-3  py-3 items-center ${sidebarOpen?"":"hidden"}`}>
                     <BrandLogo className=" text-center "/>
                     <button
                     onClick={()=>{if(setSidebarOpen)setSidebarOpen(!sidebarOpen)}}

@@ -2,10 +2,10 @@ import {  useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 
-import axios from 'axios';
 import { useGlobalContext } from '../hooks/useGlobalContext';
 import NewSidebar from '../components/admin/navbar/NewSideBar';
 import Header from '../components/admin/navbar/Header';
+import { loginWithToken } from '../utility/login';
 
 
 const AdminLayout = () => {
@@ -17,27 +17,14 @@ const AdminLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const func = async () => {
-      if(!token) navigate("/login");
+    const func = async ()=> {
 
-      await axios.post("/loginWithToken", {
-        token
-      }, {
-        headers: {
-          "Accept": "*/*",
-        }
-      }).then(res => {
-        console.log(res);
-        if (setUser) {
-          setUser(res.data)
-        }
-      }).catch(_ => {
-        navigate("/login")
-      })
-
+      if (!user){
+        if(!token) navigate("/login");
+        else  await loginWithToken(token,setUser);
+      }
     }
-    if (!user)
-      func();
+    func();
   }, [])
 
   if (!token || !user) {

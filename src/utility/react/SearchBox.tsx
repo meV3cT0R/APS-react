@@ -6,7 +6,7 @@ const SearchBox = ({formik,name}: {formik:FormikProps<any>, name:string})=> {
     const searchRef = useRef<HTMLFormElement>(null);
     const butRef = useRef<HTMLButtonElement>(null);
 
-    return <form className="flex items-end border-b-2 duration-300" ref={searchRef}>
+    return <form className="flex items-end border-b-2 duration-300" onSubmit={formik.handleSubmit} ref={searchRef}>
     <input
         type="text" className="  px-3 py-2 outline-none focus:outline-none  w-full max-w-[500px] duration-300"
         placeholder="Search...."
@@ -28,7 +28,7 @@ const SearchBox = ({formik,name}: {formik:FormikProps<any>, name:string})=> {
         value={formik.values[name]}
         onChange={formik.handleChange}
     />
-    <button className="hover:text-primary duration-300" ref={butRef}> <SearchIcon /> </button>
+    <button className="hover:text-primary duration-300" ref={butRef} type="submit"> <SearchIcon /> </button>
 </form>
 }
 

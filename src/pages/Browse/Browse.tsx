@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { products } from "../../dummy_data/products";
 import Container from "../../utility/react/Container";
 import Wrapper from "../../utility/react/Wrapper";
 import Filter from "./Filter";
@@ -14,14 +13,14 @@ const Browse = () => {
     const [products,setProducts] = useState<ProductType[] >([]);
     const formik = useFormik({
         initialValues: {
-            keyword: "",
+            keyword: params.get("keyword")?.toLowerCase() || "all",
             category: params.get("cat")?.toLowerCase() || "all",
             brand: "all",
             price : 2000,
         },
 
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            console.log(values);
         },
 
     });

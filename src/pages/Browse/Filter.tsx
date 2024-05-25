@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { axiosGetData } from "../../utility/axios_util";
 
 const Filter = ({formik,cat} : {formik :FormikProps<any>,cat?:string |null}) => {
-    const [categories,setCategories] = useState([]);
+    const [categories,setCategories] = useState<any[]>([]);
     const [brands,setBrands] = useState([]);
     
 
     useEffect(()=> {
         const func = async ()=> {
-            axiosGetData("getCategories").then(val=>{console.log(val);setCategories(val.data)}).catch(err=>console.log(err));
+            axiosGetData("getCategories").then(val=>{console.log(val);setCategories([,{name:"all"}, ...val.data])}).catch(err=>console.log(err));
             axiosGetData("getBrands").then(val=>{console.log(val);setBrands(val.data)}).catch(err=>console.log(err));
         }
 

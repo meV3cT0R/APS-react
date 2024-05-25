@@ -26,7 +26,7 @@ const Prods = ({ products, filter }: { products: ProductType[], filter: FormikPr
             setFilteredProduct(products.filter(prod => prod.price <= filter.values.price).filter(prod => {
                 if(filter.values.category=="all") return true;
                 return prod.category.name.toLowerCase() == filter.values.category.toLowerCase();
-            }).filter(prod=> JSON.stringify(prod).includes(filter.values.keyword)).sort((a, b) => {
+            }).filter(prod=> filter.values.keyword =="all" ||JSON.stringify(prod).includes(filter.values.keyword)).sort((a, b) => {
                 if (formik.values.sortBy == "asc")
                     return a.price - b.price;
                 else

@@ -6,13 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useGlobalContext } from "../../hooks/useGlobalContext";
-import { useEffect } from "react";
 
 
- 
+
+
 const Login = () => {
     const navigate = useNavigate();
-    const {token,setToken} = useGlobalContext();
+    const { token, setToken, setUser } = useGlobalContext();
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -25,50 +25,24 @@ const Login = () => {
                         "Content-Type": "application/json",
                     },
                 })
-                .then(val=>{
-                    console.log(val);
-                    setToken(val.data);
-                    localStorage.setItem("token",val.data);
-                    if(val.data.role.toLowerCase()=="admin")
-                        navigate("/admin/products");
-                    else 
-                        navigate("/products");
+                .then(async (val) => {
+                    setToken(val.data.token);
 
+                    console.log(val);
+                    localStorage.setItem("token", val.data.token);
+                    setUser(val.data.userData)
+
+                    console.log(val.data.userData.role.toLowerCase())
+                    if(val.data.userData.role.toLowerCase()=="admin") {
+                        navigate("/admin");
+                    }else navigate("/products");
                 })
                 .catch((error) => {
                     throw new Error(error);
                 });
-            return res;
         }
     })
 
-    useEffect(()=> {
-        const func = async ()=> {
-            const res = await axios
-                .post("loginWithToken", {
-                    token
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                .then(val=>{
-                    console.log(val);
-                    setToken(token);
-                    if(val.data.role.toLowerCase()=="admin")
-                        navigate("/admin/products");
-                    else 
-                        navigate("/products");
-                })
-                .catch((error) => {
-                    throw new Error(error);
-                });
-                return res;
-        }
-        if(token) {
-            func();
-        }
-    },[])
     return (
         <Container>
             <div className="w-[500px] mx-auto">

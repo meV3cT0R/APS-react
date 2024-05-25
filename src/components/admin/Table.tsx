@@ -34,7 +34,8 @@ export default function Table({
   editPath,
   deleteURL,
   afterDeletePath,
-  XCORSToken
+  XCORSToken,
+  editButton=true
 }: TableProps) {
   const navigate = useNavigate();
   const {token} = useGlobalContext();
@@ -184,16 +185,16 @@ export default function Table({
                   {operations && (
                     <td className="border-b border-[#eee] py-5 px-4  ">
                       <div className="flex items-center space-x-3.5 justify-start">
-                        <button
+                        {editButton && <button
                           className="text-green-500 text-3xl"
                           onClick={() => {
                             console.log(data);
-                            navigate((editPath?editPath:`edit/`)+data["id"]
-                            );
+                            navigate((editPath?editPath:`edit/`)+data["id"]);
+                            
                           }}
                         >
                           <FontAwesomeIcon icon={faEdit} />
-                        </button>
+                        </button>}
                         <button
                           className=" text-red-500 text-3xl "
                           onClick={() => {

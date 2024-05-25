@@ -1,16 +1,18 @@
 import BrandLogo from "./BrandLogo";
 import { ShoppingCart } from "@mui/icons-material";
 import SearchBox from "../../utility/react/SearchBox";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
+
 const Navbar = () => {
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues : {
             keyword : ""
         },
         async onSubmit(values) {
-                console.log(values);
+            navigate(`/products/?keyword=${values.keyword}`)
         }
     })
     const links = [
@@ -51,7 +53,7 @@ const Navbar = () => {
             </div>
             <div className="flex space-x-5 ">
                 <div>
-                    <SearchBox formik={formik} name="keyword"/>
+                        <SearchBox formik={formik} name="keyword"/>
                 </div>
 
                 <Link  to="/cart" className="text-3xl hover:text-primary duration-300"> <ShoppingCart/> </Link>

@@ -15,11 +15,17 @@ import axios from 'axios'
 import { CartItem } from './types/Cart'
 import AdminLayout from './layouts/AdminLayout'
 import AdminProducts from './pages/admin/products/AdminProducts'
-import ProductLoader from './pages/admin/products/ProductLoader'
 import productLoader from './pages/admin/products/ProductLoader'
 import AddProducts from './pages/admin/products/AddProducts'
 import SingleProductLoader from './pages/admin/products/SingleProductLoader'
 import EditProducts from './pages/admin/products/EditProducts'
+import Category from './pages/admin/category/Category'
+import { CategoryLoader } from './pages/admin/category/CategoryLoader'
+import AddCategory from './pages/admin/category/AddCategory'
+import EditCategory from './pages/admin/category/EditCategory'
+import { SingleCategoryLoader } from './pages/admin/category/SingleCategoryLoader'
+import { UsersLoader } from './pages/admin/users/UsersLoader'
+import Users from './pages/admin/users/Users'
 
 axios.defaults.baseURL = 'http://192.168.1.8:8080/api/';
 
@@ -118,6 +124,24 @@ function App() {
                   element : <EditProducts/>
                 },
               ]
+            }, {
+              path : "category",
+              loader:CategoryLoader,
+              element : <Category/>,
+              children :[
+                {
+                  path : "",
+                  element : <AddCategory/>
+                }, {
+                  path : "edit/:id",
+                  loader: SingleCategoryLoader,
+                  element: <EditCategory/>
+                }
+              ]
+            },{
+              path : "users",
+              loader: UsersLoader,
+              element : <Users/>
             }
           ]
         }

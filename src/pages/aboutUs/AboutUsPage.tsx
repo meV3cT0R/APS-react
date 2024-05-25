@@ -1,8 +1,11 @@
-const AboutUsPage = ()=> {
+import AboutUs from "../../components/aboutUs/AboutUs";
+import Wrapper from "../../utility/react/Wrapper";
+
+const AboutUsPage = () => {
     return (
-        <div>
-            About Us Page
-        </div>
+        <Wrapper>
+            <AboutUs />
+        </Wrapper>
     )
 }
 

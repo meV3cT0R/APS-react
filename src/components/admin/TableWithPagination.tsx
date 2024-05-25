@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ExtendedTableProps } from "./TableProps";
 import Table from "./Table";
 
-const TableWithPagination = ({ columns, datas, operations = true, onClickDelete, avoidColumns, deleteURL, afterDeletePath,editPath }: ExtendedTableProps) => {
+const TableWithPagination = ({ columns, datas, operations = true, onClickDelete, avoidColumns, deleteURL, afterDeletePath,editPath,editButton=true }: ExtendedTableProps) => {
     const [searchText, setSearchText] = useState<string>("");
     const [entries, setEntries] = useState<number>(datas?.length || 0);
     const [page, _] = useState<number>(0);
@@ -81,6 +81,7 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
                 deleteURL={deleteURL}
                 afterDeletePath={afterDeletePath}
                 editPath={editPath}
+                editButton={editButton}
             />
             <div className="text-3xl">
                 {/* <button

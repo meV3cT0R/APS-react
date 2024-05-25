@@ -2,11 +2,15 @@ import BrandLogo from '../../navbar/BrandLogo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHamburger, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../../../hooks/useGlobalContext';
 
 const Header = ({ sidebarOpen, setSidebarOpen }: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const navigate = useNavigate();
+  const {setToken,setUser} = useGlobalContext();
   return (
     <header className="sticky top-0 z-[9999] flex w-full bg-white drop-shadow-1 shadow-xl ">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-[15px] 2xl:px-[25px]">
@@ -61,6 +65,19 @@ const Header = ({ sidebarOpen, setSidebarOpen }: {
           </ul>
 
           {/* <!-- User Area --> */}
+          <div>
+            <button 
+            className='border-2 border-red-500 px-3 py-1 text-red-500 rounded-lg hover:bg-red-500 hover:text-white duration-300'
+              onClick={()=> {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.removeItem("token");
+                  navigate("/login")
+              }}
+            >
+              logout
+            </button>
+          </div>
           {/* <!-- User Area --> */}
         </div>
       </div>
