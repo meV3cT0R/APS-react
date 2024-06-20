@@ -21,7 +21,9 @@ const AddProducts = () => {
             price: "",
             imageList: [],
             category: "",
-            specs: {}
+            specs: {},
+            brandNew : true,
+            brand : ""
         },
         async onSubmit(values) {
             if (token) {
@@ -60,6 +62,20 @@ const AddProducts = () => {
                     <TextField formik={formik} label="Name" type="text" name="name" />
                     <TextField formik={formik} label="Price" type="number" name="price" />
                     <Select formik={formik} label="Category" map={catObj} name={"category"}/>
+                    
+                    <div className="pt-7 flex items-center space-x-3">
+                        <input
+                         type="checkbox"
+                          name={"brandNew"} 
+                          checked={formik.values.brandNew} 
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          className="w-[25px] h-[25px] cursor-pointer"
+                          />
+                        <label className="text-lg"> Brand New</label>
+                    </div>
+
+                    <TextField formik={formik} label="Brand" type="text" name="brand"/>
                     <MultipleFileUpload formik={formik} label="Images" name="imageList" />
                 </div>
                 <Button text="Add" />

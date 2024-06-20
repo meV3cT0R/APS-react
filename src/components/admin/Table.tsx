@@ -1,7 +1,7 @@
 import { faDumpster, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactElement } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TableObjectType } from "./types";
 import { TableProps } from "./TableProps";
 import Swal from "sweetalert2";
@@ -35,10 +35,11 @@ export default function Table({
   deleteURL,
   afterDeletePath,
   XCORSToken,
-  editButton=true
+  editButton = true,
+  delErrorMessage
 }: TableProps) {
   const navigate = useNavigate();
-  const {token} = useGlobalContext();
+  const { token } = useGlobalContext();
   let newColumns = columns;
   if (operations) {
     newColumns = [...newColumns, "operations"];
@@ -76,6 +77,23 @@ export default function Table({
                     if (avoidColumns && avoidColumns.includes(key)) return;
                     if (
                       typeof data[key] == "object" &&
+                      data[key].type == TableObjectType.LINK
+                    ) {
+                      return (
+                        <Td key={JSON.stringify(data[key])} className="whitespace-nowrap  ">
+                          <a
+                            href={data[key].url}
+                            className="text-blue-500 hover:text-blue-700 space-x-3"
+                            target="_blank"
+                          >
+                            {data[key].icon && <FontAwesomeIcon icon={data[key].icon} />}
+                            <span>{data[key].text}</span>
+                          </a>
+                        </Td>
+                      )
+                    }
+                    if (
+                      typeof data[key] == "object" &&
                       data[key].type == TableObjectType.ARRAY
                     ) {
                       return (
@@ -87,8 +105,8 @@ export default function Table({
                                 dat.type == TableObjectType.IMAGE
                               ) {
                                 return (
-                                  <li 
-                                  key={JSON.stringify(dat)}
+                                  <li
+                                    key={JSON.stringify(dat)}
                                   >
                                     {(dat.url && (
                                       <img
@@ -96,26 +114,26 @@ export default function Table({
                                         className={`min-w-[100px] min-h-[65px] ${dat.className}`}
                                       />
                                     )) || (
-                                      <img
-                                        src={"https://images.wondershare.com/repairit/aticle/2021/07/resolve-images-not-showing-problem-1.jpg"}
-                                        className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
-                                      />
-                                    )}
+                                        <img
+                                          src={"https://images.wondershare.com/repairit/aticle/2021/07/resolve-images-not-showing-problem-1.jpg"}
+                                          className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
+                                        />
+                                      )}
                                   </li>
                                 );
-                              }else if(
+                              } else if (
                                 typeof dat == "object" &&
                                 dat.type == TableObjectType.LINK
                               ) {
                                 return (
                                   <li key={JSON.stringify(dat)} className="whitespace-nowrap">
-                                    <a 
-                                    href={dat.url}
-                                    className="text-blue-500 hover:text-blue-700 space-x-3"   
-                                    target="_blank"                           
+                                    <a
+                                      href={dat.url}
+                                      className="text-blue-500 hover:text-blue-700 space-x-3"
+                                      target="_blank"
                                     >
-                                      <FontAwesomeIcon icon={dat.icon}/>
-                                      <span>{dat.url}</span>
+                                      {dat.icon && <FontAwesomeIcon icon={dat.icon} />}
+                                      <span>{dat.text}</span>
                                     </a>
                                   </li>
                                 )
@@ -141,15 +159,15 @@ export default function Table({
                         <Td key={JSON.stringify(data[key]) + i + i}>
                           {(data[key].url && (
                             <img
-                              src={data[key].url.startsWith("http") && data[key].url || imageURL+data[key].url}
+                              src={data[key].url.startsWith("http") && data[key].url || imageURL + data[key].url}
                               className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
                             />
                           )) || (
-                            <img
-                              src={noImage}
-                              className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
-                            />
-                          )}
+                              <img
+                                src={noImage}
+                                className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
+                              />
+                            )}
                         </Td>
                       );
                     } else if (typeof data[key] == "object") {
@@ -188,9 +206,8 @@ export default function Table({
                         {editButton && <button
                           className="text-green-500 text-3xl"
                           onClick={() => {
-                            console.log(data);
-                            navigate((editPath?editPath:`edit/`)+data["id"]);
-                            
+                            navigate((editPath ? editPath : `edit/`) + data["id"]);
+
                           }}
                         >
                           <FontAwesomeIcon icon={faEdit} />
@@ -213,13 +230,17 @@ export default function Table({
                                     await axios
                                       .delete(`${deleteURL}/${data["id"]}`, {
                                         headers: {
-                                          Authorization:"Bearer " +token,
+                                          Authorization: "Bearer " + token,
                                         },
                                       })
                                       .then((_) => {
-                                        navigate(`${afterDeletePath?afterDeletePath:""}`);
+                                        navigate(`${afterDeletePath ? afterDeletePath : ""}`);
                                       })
-                                      .catch((err) => console.log(err));
+                                      .catch((_) => Swal.fire({
+                                        title: "Something Went Wrong",
+                                        icon: "error",
+                                        text: delErrorMessage || err
+                                      }));
                                   }
                                 })
                                 .catch((err) => console.log(err));

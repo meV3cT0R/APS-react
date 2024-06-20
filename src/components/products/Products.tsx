@@ -45,8 +45,7 @@ const Products = () => {
 
     useEffect(()=> {
         const func = async () => {
-            axiosGetData("getAllProducts").then(val => {
-                console.log(val);
+            axiosGetData("getLatestProducts").then(val => {
                 setProducts(val.data);
             }).catch(err => console.log(err));
         }

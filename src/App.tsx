@@ -26,8 +26,10 @@ import EditCategory from './pages/admin/category/EditCategory'
 import { SingleCategoryLoader } from './pages/admin/category/SingleCategoryLoader'
 import { UsersLoader } from './pages/admin/users/UsersLoader'
 import Users from './pages/admin/users/Users'
+import Invoice from './pages/invoice/Invoice'
+import Orders from './pages/admin/orders/Orders'
 
-axios.defaults.baseURL = 'http://192.168.1.8:8080/api/';
+axios.defaults.baseURL = 'http://localhost:8080/api/';
 
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -46,7 +48,6 @@ function App() {
           },
         })
         .then(val => {
-          console.log(val);
           setToken(token);
           setUser(val.data);
         })
@@ -99,6 +100,11 @@ function App() {
               path: "cart",
               element: <Cart />
             }
+            ,
+            {
+              path: "invoice",
+              element: <Invoice />
+            }
           ]
         }, 
         {
@@ -122,7 +128,7 @@ function App() {
                   path : "edit/:id",
                   loader:SingleProductLoader,
                   element : <EditProducts/>
-                },
+                }
               ]
             }, {
               path : "category",
@@ -142,6 +148,10 @@ function App() {
               path : "users",
               loader: UsersLoader,
               element : <Users/>
+            }, 
+            {
+              path : "orders/:id",
+              element :<Orders/>
             }
           ]
         }

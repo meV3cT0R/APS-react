@@ -28,11 +28,9 @@ const Login = () => {
                 .then(async (val) => {
                     setToken(val.data.token);
 
-                    console.log(val);
                     localStorage.setItem("token", val.data.token);
                     setUser(val.data.userData)
 
-                    console.log(val.data.userData.role.toLowerCase())
                     if(val.data.userData.role.toLowerCase()=="admin") {
                         navigate("/admin");
                     }else navigate("/products");
@@ -52,7 +50,7 @@ const Login = () => {
                     </div>
                     <div>
                         <TextField type="text" name="username" label="Username" formik={formik} />
-                        <TextField type="text" name="password" label="Password" formik={formik} />
+                        <TextField type="password" name="password" label="Password" formik={formik} />
                         <div className="flex justify-end">
                             <Button text="Log in" />
                         </div>

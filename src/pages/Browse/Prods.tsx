@@ -26,7 +26,7 @@ const Prods = ({ products, filter }: { products: ProductType[], filter: FormikPr
             setFilteredProduct(products.filter(prod => prod.price <= filter.values.price).filter(prod => {
                 if(filter.values.category=="all") return true;
                 return prod.category.name.toLowerCase() == filter.values.category.toLowerCase();
-            }).filter(prod=> filter.values.keyword =="all" ||JSON.stringify(prod).toLowerCase().includes(filter.values.keyword.toLowerCase())).sort((a, b) => {
+            }).filter(prod=> filter.values.keyword.trim() =="" ||JSON.stringify(prod).toLowerCase().includes(filter.values.keyword.toLowerCase())).filter(prod=> prod.brandNew==filter.values.brandNew || !prod.brandNew==filter.values.old).sort((a, b) => {
                 if (formik.values.sortBy == "asc")
                     return a.price - b.price;
                 else
@@ -62,7 +62,7 @@ const Prods = ({ products, filter }: { products: ProductType[], filter: FormikPr
                     else
                         return b.price - a.price;
                 }).map(product => {
-                    return <Link to={`${product.id}`}><ProductCard key={JSON.stringify(product)} {...product} /></Link>
+                    return <Link key={JSON.stringify(product)} to={`${product.id}`}><ProductCard  {...product} /></Link>
                 })}
             </div>
         </div>

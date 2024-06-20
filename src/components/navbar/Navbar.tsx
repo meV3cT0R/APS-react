@@ -30,7 +30,7 @@ const Navbar = () => {
         }
     ]
     return (
-        <div className=" flex py-5 items-center px-32 shadow space-x-10">
+        <div className=" flex py-5 items-center px-32 shadow-xl space-x-10">
             <BrandLogo className="hello"/>
             <ul>
                 {

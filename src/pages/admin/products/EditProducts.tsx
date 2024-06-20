@@ -19,7 +19,8 @@ const EditProducts = ()=> {
             price : res.data.price,
             imageList : res.data.images,
             category : res.data.category.id,
-            specs : res.data.specs || {}
+            specs : res.data.specs || {},
+            brandNew : res.data.brandNew  || false
         },
         async onSubmit(values) {
             if (token) {
@@ -53,6 +54,8 @@ const EditProducts = ()=> {
     },[])
     const catObj :any = {};
     category.map(cat=> catObj[cat.id]=cat.name);
+
+
     return (
         <div>
             <form onSubmit={formik.handleSubmit} className="max-w-[800px] mx-auto">
@@ -63,6 +66,17 @@ const EditProducts = ()=> {
                 <TextField formik={formik} label="Name" type="text" name="name"/>
                 <TextField formik={formik} label="Price" type="number" name="price"/>
                 <Select formik={formik} label="Category" map={catObj} name={"category"}/>
+                <div className="pt-7 flex items-center space-x-3">
+                        <input
+                         type="checkbox"
+                          name={"brandNew"} 
+                          checked={formik.values.brandNew} 
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          className="w-[25px] h-[25px] cursor-pointer"
+                          />
+                        <label className="text-lg"> Brand New</label>
+                    </div>
 
                 <MultipleFileUpload formik={formik} label="Images" name="imageList" />
 </div>

@@ -8,7 +8,8 @@ export interface TableProps {
     deleteURL?:string,
     afterDeletePath?:string,
     XCORSToken?:string,
-    editButton?:boolean
+    editButton?:boolean,
+    delErrorMessage ?:string
 }
 
 export interface ExtendedTableProps extends TableProps {

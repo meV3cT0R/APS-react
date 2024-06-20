@@ -53,7 +53,6 @@ export async function axiosDeleteData(url:string,token:string) {
 export async function axiosPostDataV2(url: string, data: any, navigate: string,token:string) {
   const formData = new FormData();
   Object.keys(data).forEach((key) => {
-    console.log(`${key} : ${data[key]}`)
     if (key == "files"|| key=="imageList") {
       data[key].map((file:any) => {
         console.log(file);

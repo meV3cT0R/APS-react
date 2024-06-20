@@ -13,14 +13,15 @@ const Browse = () => {
     const [products,setProducts] = useState<ProductType[] >([]);
     const formik = useFormik({
         initialValues: {
-            keyword: params.get("keyword")?.toLowerCase() || "all",
+            keyword: params.get("keyword")?.toLowerCase() || "",
             category: params.get("cat")?.toLowerCase() || "all",
             brand: "all",
             price : 2000,
+            brandNew : true,
+            old:true,
         },
 
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: _ => {
         },
 
     });

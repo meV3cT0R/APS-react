@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import TableWithPagination from "../../../components/admin/TableWithPagination";
 import FAB from "../../../components/utility/FAB";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { TableObjectType } from "../../../components/admin/types";
 
 const AdminProducts = ()=> {
     const res= useLoaderData();
@@ -19,7 +20,8 @@ const AdminProducts = ()=> {
                             "name" : data.name,
                             "cat" : data.category.name,
                             "price" : data.price,
-                            "specs" : JSON.stringify(data.specs)
+                            "specs" : JSON.stringify(data.specs),
+                            
                         }
                     })}
                     deleteURL="admin/deleteProduct"

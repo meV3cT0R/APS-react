@@ -24,6 +24,7 @@ const Category = ()=> {
             })}
             deleteURL="admin/deleteCategory"
             afterDeletePath="/admin/category"
+            delErrorMessage="foreign key violation"
         />
     </div>
     </>

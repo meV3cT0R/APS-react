@@ -11,7 +11,6 @@ const AutoSpareParts = () => {
     useEffect(()=> {
         const func = async ()=> {
                 axiosGetData("getCategories").then(val=> {
-                    console.log(val.data);
                     setPartsTypes(val.data);
                 }).catch(err=>console.log(err));
         }

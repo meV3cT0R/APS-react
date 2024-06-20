@@ -9,3 +9,7 @@
 :root {
     --primary :#7a08cc;
 }
+
+body {
+    background-color: rgb(255, 253, 253);
+}

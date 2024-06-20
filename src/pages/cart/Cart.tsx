@@ -9,7 +9,7 @@ import { axiosPostJsonData } from "../../utility/axios_util";
 import Swal from "sweetalert2";
 
 const Cart = () => {
-    const { cart, setCart,token } = useContext(GlobalContext);
+    const { cart, setCart,token,user } = useContext(GlobalContext);
     const columns = ["description", "price", "quantity", "remove"];
     const navigate = useNavigate();
     return (
@@ -53,7 +53,7 @@ const Cart = () => {
                                                     <tr key={JSON.stringify(c)} className="odd:bg-gray-100 border-b ">
                                                         <td className="px-4 py-10 ">{c.name}</td>
                                                         <td className="px-4 py-10  ">
-                                                            {c.price}
+                                                            Nrs. {c.price}
                                                         </td>
                                                         <td className="px-4 py-10 flex items-center justify-center">
                                                             <button
@@ -109,7 +109,7 @@ const Cart = () => {
                                                 Total
                                             </div>
                                             <div>
-                                                {
+                                                Nrs. {
                                                     cart.map(c => c.quantity * c.price).reduce((a, b) => a + b, 0)
                                                 }
                                             </div>
@@ -119,7 +119,8 @@ const Cart = () => {
                                         <LinkButton text="Continue Shopping" to="/products" className="w-[400px]" />
                                         <button 
                                             onClick={()=> {
-                                                if(token)
+                                                if(token && user){
+                                                    
                                                     axiosPostJsonData("/user/checkOutItems",{
                                                             cartItems : cart.map(c=> {
                                                                 return {
@@ -127,18 +128,22 @@ const Cart = () => {
                                                                     productId : c.id,
                                                                 }
                                                             })
-                                                    },token).then(_=>{
+                                                    },token).then(res=>{
                                                         Swal.fire({
                                                             icon:"success",
                                                             text:"Thank you for purchasing",
                                                         })
-                                                        navigate("/products")
+                                                        navigate("/invoice", {
+                                                            state : res.data
+                                                        })
                                                         setCart([]);
                                                     }).catch(err=>Swal.fire({
                                                         icon: "error",
                                                         title: "Oops...",
                                                         text: err,
-                                                      }));
+                                                      }));}
+                                                else 
+                                                    navigate("/login");
                                                     
                                             }}
                                             className={`mt-10 text-xl border-2 border-primary px-5 py-2  capitalize w-[400px] rounded text-primary hover:bg-primary hover:text-white duration-300`}

@@ -22,7 +22,6 @@ const Select = ({formik,name,displayName,map,label,className}: {
     useEffect(()=> {
         const onClick = (e : MouseEvent)=> {
             if(selRef.current!=null) {
-                console.log();
                 if(!selRef.current.contains(e.target as ChildNode)) {
                     setShowDropdown(false);
                 }
