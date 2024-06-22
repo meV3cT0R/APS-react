@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import TableWithPagination from "../../../components/admin/TableWithPagination";
+import { TableObjectType } from "../../../components/admin/types";
+import { CartItem } from "../../../types/Cart";
+
+interface Order {id:number,checkedOutDate : number,totalCost:number,cartItems:CartItem[]}
 
 const Orders = () => {
     const { token } = useGlobalContext();
     const {id} = useParams();
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState<Order[]>([] as Order[]);
     useEffect(() => {
         const func = async () => {
             const res = await axios
@@ -16,7 +21,7 @@ const Orders = () => {
                         Accept: "*/*",
                         "Authorization" : "Bearer "+token
                     },
-                }).then(res=> setOrders(res.data))
+                }).then(res=> {console.log(res.data);setOrders(res.data)})
                 .catch((error) => {
                     throw new Error(error);
                 });
@@ -30,7 +35,24 @@ const Orders = () => {
 
     return (
         <div>
-            {JSON.stringify(orders)}
+            <TableWithPagination
+                columns={["id","bought on","total cost","details"]}
+                datas={orders.map(order=>{
+                    return {
+                        id : order.id,
+                        checkedOutDate : (new Date(order.checkedOutDate)).toLocaleDateString("en-US"),
+                        totalCost : "Nrs. "+order.totalCost,
+                        viewDetails : {
+                            url : `/admin/orders/details/${order.id}`,
+                            text: "View Details",
+                            state: order,
+                            type : TableObjectType.LINK,
+
+                        }
+                    }
+                })}
+                operations={false}
+            />
         </div>
     )
 }

@@ -18,10 +18,9 @@ const AdminLayout = () => {
 
   useEffect(() => {
     const func = async ()=> {
-
       if (!user){
         if(!token) navigate("/login");
-        else  await loginWithToken(token,setUser);
+        else  await loginWithToken(token,setUser).catch(_=>{console.log("hello");navigate("/login")});
       }
     }
     func();

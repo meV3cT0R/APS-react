@@ -1,1 +1,1 @@
-export interface ProductType{id:number,name:string,price:number,images:string[],specs:any,status:string,category:string,brandNew:boolean}
+export interface ProductType{id:number,aname: {name:string,price:number},images:string[],specs:any,brand:string,status:string,category:string,brandNew:boolean}

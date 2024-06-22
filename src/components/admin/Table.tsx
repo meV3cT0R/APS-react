@@ -1,7 +1,7 @@
 import { faDumpster, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TableObjectType } from "./types";
 import { TableProps } from "./TableProps";
 import Swal from "sweetalert2";
@@ -81,14 +81,15 @@ export default function Table({
                     ) {
                       return (
                         <Td key={JSON.stringify(data[key])} className="whitespace-nowrap  ">
-                          <a
-                            href={data[key].url}
+                          <Link
+                            to={data[key].url}
+                            state={data[key].state || ""}
                             className="text-blue-500 hover:text-blue-700 space-x-3"
-                            target="_blank"
+                            
                           >
                             {data[key].icon && <FontAwesomeIcon icon={data[key].icon} />}
                             <span>{data[key].text}</span>
-                          </a>
+                          </Link>
                         </Td>
                       )
                     }
@@ -236,7 +237,7 @@ export default function Table({
                                       .then((_) => {
                                         navigate(`${afterDeletePath ? afterDeletePath : ""}`);
                                       })
-                                      .catch((_) => Swal.fire({
+                                      .catch((err) => Swal.fire({
                                         title: "Something Went Wrong",
                                         icon: "error",
                                         text: delErrorMessage || err

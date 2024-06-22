@@ -61,6 +61,7 @@ const Products = () => {
                     <button
                         className="absolute left-0 top-[50%] translate-y-[-50%] w-[50px] h-[50px] bg-black/75  text-white rounded-[50%]"
                         onClick={() => {
+                            setRight(false);
                             if (sliderRef.current != null) {
                                 sliderRef.current.scrollTo({
                                     left: sliderRef.current.scrollLeft - 300,
@@ -76,6 +77,7 @@ const Products = () => {
                     <button
                         className="absolute right-0 top-[50%] translate-y-[-50%] w-[50px] h-[50px] bg-black/75  text-white rounded-[50%]"
                         onClick={() => {
+                            setRight(true);
                             if (sliderRef.current != null) {
                                 sliderRef.current.scrollTo({
                                     left: sliderRef.current.scrollLeft + 300,
@@ -99,8 +101,8 @@ const Products = () => {
                                             src={imageURL+product?.images[0] || noImage}
                                             className="w-[full] h-[300px] object-cover border" />
 
-                                        <h1 className="text-xl"> {product.name}</h1>
-                                        <p className="text-gray-500 text-lg"> {product.price}</p>
+                                        <h1 className="text-xl"> {product.aname.name}</h1>
+                                        <p className="text-gray-500 text-lg">Nrs. {product.aname.price}</p>
                                     </div>
                                 </Link>
                             </li>

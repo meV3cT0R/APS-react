@@ -15,8 +15,8 @@ const EditProducts = ()=> {
     const res :any = useLoaderData();
     const formik = useFormik({
         initialValues : {
-            name : res.data.name,
-            price : res.data.price,
+            name : res.data.aname.name,
+            price : res.data.aname.price,
             imageList : res.data.images,
             category : res.data.category.id,
             specs : res.data.specs || {},

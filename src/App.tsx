@@ -24,10 +24,13 @@ import { CategoryLoader } from './pages/admin/category/CategoryLoader'
 import AddCategory from './pages/admin/category/AddCategory'
 import EditCategory from './pages/admin/category/EditCategory'
 import { SingleCategoryLoader } from './pages/admin/category/SingleCategoryLoader'
-import { UsersLoader } from './pages/admin/users/UsersLoader'
 import Users from './pages/admin/users/Users'
-import Invoice from './pages/invoice/Invoice'
 import Orders from './pages/admin/orders/Orders'
+import OrderDetails from './pages/admin/orders/OrderDetails'
+import UserInvoice from './pages/invoice/UserInvoice'
+import Profile from './pages/profile/Profile'
+import Details from './pages/profile/Details'
+import History from './pages/profile/History'
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
@@ -99,11 +102,28 @@ function App() {
             {
               path: "cart",
               element: <Cart />
+            },{
+              path : "profile",
+              element : <Profile/>,
+              children: [
+                {
+                  path : "",
+                  element : <Details/>
+                },{
+                  path : "order_history",
+                  element : <History/>
+                },{
+                  path : "change_password",
+
+                }
+              ]
             }
             ,
             {
               path: "invoice",
-              element: <Invoice />
+              element: <UserInvoice />
+            },{
+
             }
           ]
         }, 
@@ -146,12 +166,14 @@ function App() {
               ]
             },{
               path : "users",
-              loader: UsersLoader,
               element : <Users/>
             }, 
             {
               path : "orders/:id",
               element :<Orders/>
+            }, {
+              path : "orders/details/:id",
+              element : <OrderDetails/>
             }
           ]
         }

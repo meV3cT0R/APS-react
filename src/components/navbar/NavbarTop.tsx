@@ -10,7 +10,7 @@ const NavbarTop = () => {
             {user!=null || <div className="flex-grow"></div>}
             {
                 user && <><div className="flex space-x-5 text-lg py-1  capitalize "><div className="justify-self-end text-white ">
-                     <span className="font-italic"> Logged in as </span> <span className="font-bold">{user.name}</span>
+                     <span className="font-italic"> Logged in as </span> <Link to="profile"><span className="font-bold">{user.name}</span></Link>
                       </div> </div><button className="text-yellow-500 text-lg py-1"
                             onClick={()=> {
                                 logout(setToken,setUser);

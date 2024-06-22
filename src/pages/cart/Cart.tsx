@@ -9,7 +9,7 @@ import { axiosPostJsonData } from "../../utility/axios_util";
 import Swal from "sweetalert2";
 
 const Cart = () => {
-    const { cart, setCart,token,user } = useContext(GlobalContext);
+    const { cart, setCart,token,user,setUser } = useContext(GlobalContext);
     const columns = ["description", "price", "quantity", "remove"];
     const navigate = useNavigate();
     return (
@@ -51,9 +51,9 @@ const Cart = () => {
                                             {cart.map((c) => {
                                                 return (
                                                     <tr key={JSON.stringify(c)} className="odd:bg-gray-100 border-b ">
-                                                        <td className="px-4 py-10 ">{c.name}</td>
+                                                        <td className="px-4 py-10 ">{c.aname.name}</td>
                                                         <td className="px-4 py-10  ">
-                                                            Nrs. {c.price}
+                                                            Nrs. {c.aname.price}
                                                         </td>
                                                         <td className="px-4 py-10 flex items-center justify-center">
                                                             <button
@@ -110,7 +110,7 @@ const Cart = () => {
                                             </div>
                                             <div>
                                                 Nrs. {
-                                                    cart.map(c => c.quantity * c.price).reduce((a, b) => a + b, 0)
+                                                    cart.map(c => c.quantity * c.aname.price).reduce((a, b) => a + b, 0)
                                                 }
                                             </div>
                                         </div>
@@ -135,6 +135,10 @@ const Cart = () => {
                                                         })
                                                         navigate("/invoice", {
                                                             state : res.data
+                                                        })
+                                                        setUser({
+                                                            ...user,
+                                                            orders :[...user.orders,res.data]
                                                         })
                                                         setCart([]);
                                                     }).catch(err=>Swal.fire({

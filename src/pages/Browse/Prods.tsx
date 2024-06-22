@@ -23,14 +23,14 @@ const Prods = ({ products, filter }: { products: ProductType[], filter: FormikPr
 
     useEffect(() => {
         if (setFilteredProduct)
-            setFilteredProduct(products.filter(prod => prod.price <= filter.values.price).filter(prod => {
+            setFilteredProduct(products.filter(prod => prod.aname.price <= filter.values.price).filter(prod => {
                 if(filter.values.category=="all") return true;
                 return prod.category.name.toLowerCase() == filter.values.category.toLowerCase();
-            }).filter(prod=> filter.values.keyword.trim() =="" ||JSON.stringify(prod).toLowerCase().includes(filter.values.keyword.toLowerCase())).filter(prod=> prod.brandNew==filter.values.brandNew || !prod.brandNew==filter.values.old).sort((a, b) => {
+            }).filter(prod=>filter.values.brand.toLowerCase()==prod.brand || filter.values.brand.toLowerCase()=="all").filter(prod=> filter.values.keyword.trim() =="" ||JSON.stringify(prod).toLowerCase().includes(filter.values.keyword.toLowerCase())).filter(prod=> (prod.brandNew && filter.values.brandNew) || (!prod.brandNew&&filter.values.old)).sort((a, b) => {
                 if (formik.values.sortBy == "asc")
-                    return a.price - b.price;
+                    return a.aname.price - b.aname.price;
                 else
-                    return b.price - a.price;
+                    return b.aname.price - a.aname.price;
             }));
 
     }, [products,filter])
@@ -56,11 +56,11 @@ const Prods = ({ products, filter }: { products: ProductType[], filter: FormikPr
             </div>
 
             <div className="grid grid-cols-4 ">
-                {filteredProduct.filter(prod => prod.price <= filter.values.price).sort((a, b) => {
+                {filteredProduct.filter(prod => prod.aname.price <= filter.values.price).sort((a, b) => {
                     if (formik.values.sortBy == "asc")
-                        return a.price - b.price;
+                        return a.aname.price - b.aname.price;
                     else
-                        return b.price - a.price;
+                        return b.aname.price - a.aname.price;
                 }).map(product => {
                     return <Link key={JSON.stringify(product)} to={`${product.id}`}><ProductCard  {...product} /></Link>
                 })}

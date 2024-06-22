@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
-import { useGlobalContext } from "../hooks/useGlobalContext";
 
 export async function loginWithToken(token:string,setUser : Dispatch<SetStateAction<any>>) {
     return await axios.post("/loginWithToken", {

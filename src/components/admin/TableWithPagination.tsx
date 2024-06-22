@@ -1,11 +1,13 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ExtendedTableProps } from "./TableProps";
 import Table from "./Table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const TableWithPagination = ({ columns, datas, operations = true, onClickDelete, avoidColumns, deleteURL, afterDeletePath,editPath,editButton=true,delErrorMessage}: ExtendedTableProps) => {
     const [searchText, setSearchText] = useState<string>("");
     const [entries, setEntries] = useState<number>(datas?.length || 0);
-    const [page, _] = useState<number>(0);
+    const [page, setPage] = useState<number>(0);
     const [filteredData, setFilteredData] = useState<any[] | null>(datas);
     const rightRef = useRef<HTMLButtonElement>(null);
     const leftRef = useRef<HTMLButtonElement>(null);
@@ -84,8 +86,8 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
                 editButton={editButton}
                 delErrorMessage={delErrorMessage}
             />
-            <div className="text-3xl">
-                {/* <button
+            <div className="text-xl">
+                <button
                     onClick={()=>setPage(page-1)}
                     ref={leftRef}
                 >
@@ -97,7 +99,7 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
                     ref={rightRef}
                 >
                     <FontAwesomeIcon icon={faAngleRight}/>
-                </button> */}
+                </button>
             </div>
         </div>
     )

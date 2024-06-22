@@ -1,11 +1,9 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import BrandLogo from "../../components/navbar/BrandLogo";
-import Button from "../../components/form/Button";
 
 const Invoice = () => {
     const { state } = useLocation();
     const date = new Date(state.checkedOutDate);
-    const navigate = useNavigate();
     return (
         <div className="max-w-[800px] mx-auto space-y-5 py-20 px-10 border-2 shadow my-20">
 
@@ -76,9 +74,7 @@ const Invoice = () => {
 
 
             </div>
-            <div className="flex justify-end">
-                    <Button text="browse more products" onClick={()=>navigate("/products")}/>
-                </div>
+           
         </div>
     )
 }
