@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import Container from "../../utility/react/Container";
 import TextField from "../../components/form/TextField";
 import Button from "../../components/form/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useGlobalContext } from "../../hooks/useGlobalContext";
@@ -12,7 +12,8 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { token, setToken, setUser } = useGlobalContext();
+    const { token, setToken, setUser,user } = useGlobalContext();
+    
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -40,7 +41,9 @@ const Login = () => {
                 });
         }
     })
-
+    if(user) {
+        return user.role.toLowerCase()=="admin"?<Navigate to="/admin"/>:<Navigate to="/products"/>
+    }
     return (
         <Container>
             <div className="w-[500px] mx-auto">

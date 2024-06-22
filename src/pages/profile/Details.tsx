@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 const Details = () => {
     const { user, token,setUser } = useGlobalContext();
 
-    console.log(user);
     const navigate = useNavigate();
     if (!user) { return <Navigate to="/login" /> }
     const formik = useFormik({
@@ -54,11 +53,11 @@ const Details = () => {
                 </div>
                 <div className="col-span-2 text-lg "> Address</div>
                 <div className="col-span-10">
-                    <input type="text" name="name" className="border-2 px-3 py-2 rounded-lg w-full" value={formik.values.address} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                    <input type="text" name="address" className="border-2 px-3 py-2 rounded-lg w-full" value={formik.values.address} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 </div>
                 <div className="col-span-2 text-lg "> Phone </div>
                 <div className="col-span-10">
-                    <input type="text" name="name" className="border-2 px-3 py-2 rounded-lg w-full" value={formik.values.phone} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                    <input type="text" name="phone" className="border-2 px-3 py-2 rounded-lg w-full" value={formik.values.phone} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 </div>
 
                 <div className="col-span-full justify-self-end">

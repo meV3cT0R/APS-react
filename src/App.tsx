@@ -31,6 +31,7 @@ import UserInvoice from './pages/invoice/UserInvoice'
 import Profile from './pages/profile/Profile'
 import Details from './pages/profile/Details'
 import History from './pages/profile/History'
+import ChangePassword from './pages/profile/ChangePassword'
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
@@ -108,13 +109,14 @@ function App() {
               children: [
                 {
                   path : "",
+
                   element : <Details/>
                 },{
                   path : "order_history",
                   element : <History/>
                 },{
                   path : "change_password",
-
+                  element : <ChangePassword/>
                 }
               ]
             }

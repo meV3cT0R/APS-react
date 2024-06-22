@@ -5,12 +5,13 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 const History = ()=> {
     const {user}  = useGlobalContext();
+    console.log(user);
     if(!user) return <Navigate to="/login"/>
     return (
         <div>
             <TableWithPagination
                 columns={["id","bought on","total cost","details"]}
-                datas={user.orders.map((order:any)=>{
+                datas={user.orders && user.orders.map((order:any)=>{
                     return {
                         id : order.id,
                         checkedOutDate : (new Date(order.checkedOutDate)).toLocaleDateString("en-US"),

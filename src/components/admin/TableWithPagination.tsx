@@ -6,7 +6,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const TableWithPagination = ({ columns, datas, operations = true, onClickDelete, avoidColumns, deleteURL, afterDeletePath,editPath,editButton=true,delErrorMessage}: ExtendedTableProps) => {
     const [searchText, setSearchText] = useState<string>("");
-    const [entries, setEntries] = useState<number>(datas?.length || 0);
+    const [entries, setEntries] = useState<number>(4);
     const [page, setPage] = useState<number>(0);
     const [filteredData, setFilteredData] = useState<any[] | null>(datas);
     const rightRef = useRef<HTMLButtonElement>(null);
