@@ -6,6 +6,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { useState } from "react";
 
 
 
@@ -13,7 +14,7 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 const Login = () => {
     const navigate = useNavigate();
     const { token, setToken, setUser,user } = useGlobalContext();
-    
+    const [error,setError] = useState("");
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -27,6 +28,7 @@ const Login = () => {
                     },
                 })
                 .then(async (val) => {
+
                     setToken(val.data.token);
 
                     localStorage.setItem("token", val.data.token);
@@ -35,8 +37,12 @@ const Login = () => {
                     if(val.data.userData.role.toLowerCase()=="admin") {
                         navigate("/admin");
                     }else navigate("/products");
+
+                    setError("");
                 })
                 .catch((error) => {
+
+                    setError("Invalid Username/Password");
                     throw new Error(error);
                 });
         }
@@ -50,6 +56,9 @@ const Login = () => {
                 <form className="space-y-5" onSubmit={formik.handleSubmit}>
                     <div >
                         <h1 className="text-center text-primary text-3xl font-bold">Log in</h1>
+                    </div>
+                    <div>
+                        <p className="text-red-900 text-center"> {error && error}</p>
                     </div>
                     <div>
                         <TextField type="text" name="username" label="Username" formik={formik} />
