@@ -36,7 +36,7 @@ const Details = () => {
                                 "Authorization": `Bearer ${token}`,
                                 "Content-Type": "multipart/form-data",
                             }
-                        }).then(val => {if(setUser) setUser(val.data); navigate("")})
+                        }).then(val => {if(setUser) setUser(val.data); Swal.fire({text:"User data successfully updated",icon:"success"}); navigate("")})
                     }
                 })
 

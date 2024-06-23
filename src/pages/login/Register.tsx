@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { axiosPostJsonData } from "../../utility/axios_util";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const { token } = useGlobalContext();
@@ -22,17 +23,18 @@ const Register = () => {
             phoneNumber: ""
         },
         async onSubmit(values) {
-            if (token) {
+            console.log(values);
+
                 await axios
                     .post("register", values, {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                    }).then(_ => navigate("/login"))
+                    }).then(_ => {Swal.fire({text:"User Succesfully created",icon:"success"}); navigate("/login")})
                     .catch((error) => {
+                        Swal.fire({text:"Something Went Wrong",icon:"error"});
                         throw new Error(error);
                     });
-            }
         },
         validationSchema: (Yup.object().shape({
             name: Yup.string().min(2).max(50).required(),
