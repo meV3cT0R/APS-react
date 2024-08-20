@@ -27,9 +27,10 @@ const Details = () => {
                     if (result.isConfirmed) {
 
                         const formData = new FormData();
-                        Object.keys(values).map(key => {
+
+                        for(let key in values){
                             formData.append(key, values[key]);
-                        })
+                        }
                         formData.append("id",user.id);
                         await axios.put("user/update", formData, {
                             headers: {

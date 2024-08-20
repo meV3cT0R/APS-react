@@ -16,14 +16,16 @@ const ProductInfo = () => {
 
     const [imgIdx, setImgIdx] = useState(0);
     const product = data.data;
-
-    if (!product) return;
-
+    
     useEffect(() => {
         window.scrollTo({
             top: 0
         })
     }, [])
+    
+    if (!product) return;
+
+
     return (
         <div className=" px-32 py-10 ">
             <div className=" flex shadow-xl">
@@ -35,13 +37,19 @@ const ProductInfo = () => {
 
                     </div>
                     <div className="flex  overflow-x-scroll">
-                        {product.images.map((img, i) => {
+                        {product.images.map((img : string, i :number) => {
                             return <img
                                 src={imageURL + img}
                                 className={`w-[100px] h-[100px] object-cover border-4 cursor-pointer ${imgIdx == i ? " border-primary" : ""}`}
 
                                 onClick={() => {
                                     setImgIdx(i);
+                                }}
+                                tabIndex={0}
+
+                                onKeyUp={(e)=> {
+                                    if(e.key=="Enter")
+                                        setImgIdx(i);
                                 }}
                             />
                         })}

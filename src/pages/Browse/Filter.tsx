@@ -14,7 +14,6 @@ const Filter = ({ formik }: { formik: FormikProps<any>, cat?: string | null }) =
             axiosGetData("getCategories").then(val => {  setCategories([, { name: "all" }, ...val.data]) }).catch(err => console.log(err));
             axiosGetData("getBrands").then(val => {  setBrands(val.data) }).catch(err => console.log(err));
         }
-
         func();
     }, [])
 
@@ -37,6 +36,12 @@ const Filter = ({ formik }: { formik: FormikProps<any>, cat?: string | null }) =
                                 className={`${formik.values.category.toLowerCase() == c.name.toLowerCase() ? "text-primary" : ""} cursor-pointer hover:text-primary duration-300`}
                                 onClick={() => {
                                     formik.setFieldValue("category", c.name);
+                                }}
+                                tabIndex={0}
+
+                                onKeyUp={(e)=> {
+                                    if(e.key=="Enter")
+                                        formik.setFieldValue("category", c.name);
                                 }}
                             >
                                 {c.name}

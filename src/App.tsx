@@ -9,7 +9,7 @@ import Login from './pages/login/Login'
 import Register from './pages/login/Register'
 import Cart from './pages/cart/Cart'
 import { GlobalContext } from './GlobalContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { axiosGetData } from './utility/axios_util'
 import axios from 'axios'
 import { CartItem } from './types/Cart'
@@ -40,6 +40,7 @@ function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [user, setUser] = useState<any>();
 
+  const obj = useMemo(()=>{ return {cart, setCart, token, setToken,user,setUser} },[])
 
   useEffect(() => {
     const func = async () => {
@@ -52,7 +53,6 @@ function App() {
           },
         })
         .then(val => {
-          setToken(token);
           setUser(val.data);
         })
         .catch((error) => {
@@ -65,9 +65,7 @@ function App() {
     }
   }, []);
   return (
-    <GlobalContext.Provider value={
-      { cart, setCart, token, setToken,user,setUser }
-    }>
+    <GlobalContext.Provider value={obj}>
       <RouterProvider router={createBrowserRouter([
         {
           path: "/",

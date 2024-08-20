@@ -13,10 +13,10 @@ import { imageURL, noImage } from "../../utility/constants";
 function Td({
   children,
   className,
-}: {
+}: Readonly<{
   children: ReactElement[] | ReactElement;
   className?: string;
-}) {
+}>) {
   return (
     <td
       className={`border-b border-[#eee] py-5 px-4 pl-9  xl:pl-11 ${className}`}
@@ -34,10 +34,9 @@ export default function Table({
   editPath,
   deleteURL,
   afterDeletePath,
-  XCORSToken,
   editButton = true,
   delErrorMessage
-}: TableProps) {
+}: Readonly<TableProps>) {
   const navigate = useNavigate();
   const { token } = useGlobalContext();
   let newColumns = columns;
@@ -51,10 +50,10 @@ export default function Table({
         <table className="w-full table-auto">
           <thead className="shadow-sm ">
             <tr className="bg-slate-100 text-left ">
-              {newColumns.map((column, i) => {
+              {newColumns.map((column) => {
                 return (
                   <th
-                    key={column + i}
+                    key={column}
                     className="capitalize whitespace-nowrap py-8 px-4 font-extrabold text-black  xl:pl-11"
                   >
                     {column}

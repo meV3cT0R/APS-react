@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, forwardRef,  useState } from "react";
+import { Dispatch, SetStateAction, forwardRef } from "react";
 
-import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition, faAngleLeft, faCat, faPerson, faShop } from "@fortawesome/free-solid-svg-icons";
 import BrandLogo from "../../navbar/BrandLogo";
 import "../../products/products.css"
+import NavLinkHelper from "./NavLinkHelper";
 
 const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebarOpen?: Dispatch<SetStateAction<boolean>> }>(({ sidebarOpen,setSidebarOpen }, ref) => {
     const adminLinks :{
@@ -75,29 +75,7 @@ const NewSidebar = forwardRef<HTMLDivElement, { sidebarOpen: boolean, setSidebar
             </div>
             <ul className="flex flex-col h-full bg-white mt-3.5 overflow-x-visible">
                 {adminLinks.map((link, i) => {
-                    const [visible,setVisible] = useState<boolean>(false);
-                    return <NavLink
-                        key={JSON.stringify(link) + i}
-                        to={link.path}
-                        className={({ isActive }) => {
-                            const style = "relative navlink px-5  md:px-8 py-5 w-full overflow-x-visible capitalize hover:text-primary duration-300 flex items-center space-x-5 whitespace-nowrap";
-                            return isActive ? `${style} bg-slate-100 text-primary` : `${style} text-secondary`;
-                        }}
-
-                        onMouseEnter={()=> {
-                            setVisible(true);
-                        }}
-                        onMouseLeave={()=> {
-                            setVisible(false);
-                            
-                        }}
-                    >
-                        <span><FontAwesomeIcon icon={link.icon} className="text-2xl text-center"/></span>
-                        {sidebarOpen && <span> {link.name}</span>}
-                        {!sidebarOpen && <div 
-                        className={`fixed text-xs left-20  arrow_box duration-300  text-white px-5 py-1 ${visible?" translate-x-0 opacity-100 ":"translate-x-full opacity-0 pointer-events-none"}`}
-                        > {link.name} </div>}
-                    </NavLink>
+                    return <NavLinkHelper link={link} i={i} sidebarOpen={sidebarOpen}/>
                 })}
             </ul>
         </div>

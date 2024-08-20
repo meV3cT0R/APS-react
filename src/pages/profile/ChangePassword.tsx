@@ -26,9 +26,10 @@ const ChangePassword = () => {
                     if (result.isConfirmed) {
 
                         const formData = new FormData();
-                        Object.keys(values).map(key => {
+
+                        for(let key in values)
                             formData.append(key, values[key]);
-                        })
+
                         formData.append("username", user.username);
                         await axios.put("user/updatePassword", formData, {
                             headers: {

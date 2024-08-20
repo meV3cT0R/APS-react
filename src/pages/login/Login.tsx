@@ -58,7 +58,7 @@ const Login = () => {
                         <h1 className="text-center text-primary text-3xl font-bold">Log in</h1>
                     </div>
                     <div>
-                        <p className="text-red-900 text-center"> {error && error}</p>
+                        <p className="text-red-900 text-center"> {error || "Something went wrong"}</p>
                     </div>
                     <div>
                         <TextField type="text" name="username" label="Username" formik={formik} />
