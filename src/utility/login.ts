@@ -2,7 +2,7 @@ import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { User } from "../types/user";
 
-export async function loginWithToken(token:string,setUser : Dispatch<SetStateAction<any>>) {
+export async function loginWithToken(token:string,setUser : Dispatch<SetStateAction<User |null>>) {
     return await axios.post("/loginWithToken", {
         token
       }, {
