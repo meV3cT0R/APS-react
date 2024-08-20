@@ -100,7 +100,7 @@ export default function Table({
                       return (
                         <Td key={JSON.stringify(data[key])}>
                           <ul className={(data[key]?.className as string)}>
-                            {(data[key].values as any).map((dat : TableInnerData) => {
+                            {(data[key].values as unknown).map((dat : TableInnerData) => {
                               if (
                                 typeof dat == "object" &&
                                 dat.type as TableObjectType == TableObjectType.IMAGE
