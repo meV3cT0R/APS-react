@@ -13,7 +13,6 @@ export async function loginWithToken(token:string,setUser : Dispatch<SetStateAct
         if (setUser) {
           setUser(res.data)
         }
-        res
       })
 }
 
