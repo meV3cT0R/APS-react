@@ -33,7 +33,7 @@ const Prods = ({ products, filter }: { products: ProductType[], filter: FormikPr
                     return b.aname.price - a.aname.price;
             }));
 
-    }, [products,filter])
+    }, [products,filter,formik])
     return (
         <div className="flex flex-col w-full space-y-2 ">
             <div className="flex justify-between py-3 text-lg">

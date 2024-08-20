@@ -8,14 +8,17 @@ const Details = () => {
     const { user, token,setUser } = useGlobalContext();
 
     const navigate = useNavigate();
-    if (!user) { return <Navigate to="/login" /> }
     const formik = useFormik({
         initialValues: {
             name: user.name,
             address: user.address,
             phone: user.phone
         },
-        async onSubmit(values: any) {
+        async onSubmit(values: {
+            name : string,
+            address : string,
+            phone : string
+        }) {
             if (token) {
                 Swal.fire({
                     text: "Do you want to continue?",
@@ -28,8 +31,8 @@ const Details = () => {
 
                         const formData = new FormData();
 
-                        for(let key in values){
-                            formData.append(key, values[key]);
+                        for(const key in values){
+                            formData.append(key, values[key as keyof typeof values]);
                         }
                         formData.append("id",user.id);
                         await axios.put("user/update", formData, {
@@ -45,6 +48,9 @@ const Details = () => {
             }
         }
     });
+
+    if (!user) { return <Navigate to="/login" /> }
+
     return (
         <div>
             <form className="grid grid-cols-12 justify-center items-center gap-8 max-w-[600px]" onSubmit={formik.handleSubmit}>

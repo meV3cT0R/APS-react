@@ -29,7 +29,7 @@ const Orders = () => {
             return res;
         }
         func();
-    }, [])
+    }, [id,token])
 
     if (orders == null || orders.length == 0) return "No Data...";
 

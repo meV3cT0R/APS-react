@@ -13,7 +13,7 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
     const leftRef = useRef<HTMLButtonElement>(null);
 
 
-    const handleData = () => {
+    const handleData = useCallback(() => {
         if (datas) {
             const data = [...datas.slice(page * entries, (page * entries) + entries)];
             if (leftRef.current) {
@@ -28,14 +28,16 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
             return data;
         }
         return [];
-    }
+    },[datas,page,entries])
+
     useEffect(() => {
         setFilteredData(handleData());
-    }, [page, entries, datas]);
+    }, [page, entries, datas,handleData]);
 
     useEffect(()=> {
         setFilteredData(datas);
     },[datas])
+    
     const func = useCallback((dat: any) => {
         for (const [_, value] of Object.entries(dat)) {
             if (typeof (value) == "object") { if (func(value)) return true}
@@ -46,7 +48,7 @@ const TableWithPagination = ({ columns, datas, operations = true, onClickDelete,
 
     useEffect(() => {
         setFilteredData(handleData().filter((dat: any) => func(dat)));
-    }, [searchText]);
+    }, [searchText,handleData,func]);
 
     return (
         <div className="space-y-10">

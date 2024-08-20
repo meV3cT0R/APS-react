@@ -24,7 +24,7 @@ const Users = () => {
             return res;
         }
         func();
-    }, [])
+    }, [token])
     return (
         <div>
             <TableWithPagination 

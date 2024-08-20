@@ -2,13 +2,12 @@ import Slide from "./Slide";
 import SlideType from "./SlideType";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Carousel = () => {
 
     const [index,setIndex] = useState(0);
-    const count = useRef(0);
-    const slides: SlideType[] = [
+    const [slides, _] = useState<SlideType[]>([
         {
             image: "https://images.collectingcars.com/021553/DSC01008.jpg?w=1263&fit=fillmax&crop=edges&auto=format,compress&cs=srgb&q=85",
             title: "some Random Shit",
@@ -28,8 +27,7 @@ const Carousel = () => {
             secondImage: "",
         },
         
-    ]
-
+    ])
     useEffect(()=> {
         const autoSlide = setInterval(()=> {
             setIndex((index + 1) % slides.length);
@@ -38,7 +36,7 @@ const Carousel = () => {
         return ()=> {
             clearInterval(autoSlide)
         }
-    },[index])
+    },[index,setIndex,slides])
     return (
         <div className="relative overflow-hidden">
 

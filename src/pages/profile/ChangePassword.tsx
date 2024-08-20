@@ -8,13 +8,15 @@ const ChangePassword = () => {
     const { user, token } = useGlobalContext();
     const navigate = useNavigate();
 
-    if (!user) return <Navigate to="/login" />
     const formik = useFormik({
         initialValues: {
             password: "",
             newPassword: "",
         },
-        async onSubmit(values: any) {
+        async onSubmit(values: {
+            password: string,
+            newPassword : string
+        }) {
             Swal.fire({
                 text: "Do you want to continue?",
                 showConfirmButton: true,
@@ -27,8 +29,8 @@ const ChangePassword = () => {
 
                         const formData = new FormData();
 
-                        for(let key in values)
-                            formData.append(key, values[key]);
+                        for(const key in values)
+                            formData.append(key, values[key as keyof typeof values]);
 
                         formData.append("username", user.username);
                         await axios.put("user/updatePassword", formData, {
@@ -51,6 +53,7 @@ const ChangePassword = () => {
                 })
         }
     })
+    if (!user) return <Navigate to="/login" />
     return (
         <div>
             <form className="grid grid-cols-12 justify-center items-center gap-8 max-w-[600px]" onSubmit={formik.handleSubmit}>

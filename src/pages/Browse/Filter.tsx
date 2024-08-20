@@ -11,7 +11,7 @@ const Filter = ({ formik }: { formik: FormikProps<any>, cat?: string | null }) =
 
     useEffect(() => {
         const func = async () => {
-            axiosGetData("getCategories").then(val => {  setCategories([, { name: "all" }, ...val.data]) }).catch(err => console.log(err));
+            axiosGetData("getCategories").then(val => {  setCategories([{ name: "all" }, ...val.data]) }).catch(err => console.log(err));
             axiosGetData("getBrands").then(val => {  setBrands(val.data) }).catch(err => console.log(err));
         }
         func();

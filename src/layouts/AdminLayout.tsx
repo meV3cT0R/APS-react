@@ -24,7 +24,7 @@ const AdminLayout = () => {
       }
     }
     func();
-  }, [])
+  }, [token,setUser,navigate,user])
 
   if (!token || !user) {
     return "Loading..."

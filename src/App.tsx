@@ -38,9 +38,9 @@ axios.defaults.baseURL = 'http://localhost:8080/api/';
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState();
 
-  const obj = useMemo(()=>{ return {cart, setCart, token, setToken,user,setUser} },[])
+  const obj = useMemo(()=>{ return {cart, setCart, token, setToken,user,setUser} },[cart,setCart,token,setToken,user,setUser])
 
   useEffect(() => {
     const func = async () => {
@@ -63,7 +63,7 @@ function App() {
     if (token) {
       func();
     }
-  }, []);
+  }, [token]);
   return (
     <GlobalContext.Provider value={obj}>
       <RouterProvider router={createBrowserRouter([
