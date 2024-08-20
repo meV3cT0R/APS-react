@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
+import { User } from "../types/user";
 
 export async function loginWithToken(token:string,setUser : Dispatch<SetStateAction<any>>) {
     return await axios.post("/loginWithToken", {
@@ -16,7 +17,7 @@ export async function loginWithToken(token:string,setUser : Dispatch<SetStateAct
       })
 }
 
-export function logout(setUser:Dispatch<SetStateAction<any>>,setToken:Dispatch<SetStateAction<string | null>>) {
+export function logout(setUser:Dispatch<SetStateAction<User |null>>,setToken:Dispatch<SetStateAction<string | null>>) {
 
     setUser(null);
     setToken(null);
