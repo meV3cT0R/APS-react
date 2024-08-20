@@ -7,9 +7,10 @@ import { useEffect } from "react";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import { axiosPostData } from "../../../utility/axios_util";
 import Swal from "sweetalert2";
+import { Category } from "../../../types/Category";
 
 const EditCategory = () => {
-    const res = useLoaderData();
+    const res = useLoaderData() as {data:Category};
     const {token} = useGlobalContext();
     const navigate = useNavigate();
     const formik = useFormik({
@@ -18,7 +19,7 @@ const EditCategory = () => {
             name : "",
             file: ""
         },
-        async onSubmit(values, {resetForm}) {
+        async onSubmit(values) {
             if(token) {
                 await axiosPostData("admin/saveCategory",values,token).then(_=> {
                     navigate("/admin/category")
@@ -35,7 +36,7 @@ const EditCategory = () => {
 
     )
     useEffect(() => {
-        if (res.data) {
+        if (res?.data) {
             formik.setValues({
                 id:res.data.id,
                 name: res.data.name,
@@ -43,7 +44,7 @@ const EditCategory = () => {
             });
         }
         window.scrollTo(0,0);
-    }, [res]);
+    }, [res,formik]);
 
     
     return (

@@ -13,7 +13,7 @@ import { useState } from "react";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { token, setToken, setUser,user } = useGlobalContext();
+    const {  setToken, setUser,user } = useGlobalContext();
     const [error,setError] = useState("");
     const formik = useFormik({
         initialValues: {
@@ -21,7 +21,7 @@ const Login = () => {
             password: ""
         },
         async onSubmit(values) {
-            const res = await axios
+            await axios
                 .post("login", values, {
                     headers: {
                         "Content-Type": "application/json",

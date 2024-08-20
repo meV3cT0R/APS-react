@@ -4,13 +4,10 @@ import TextField from "../../components/form/TextField";
 import Button from "../../components/form/Button";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { useGlobalContext } from "../../hooks/useGlobalContext";
-import { axiosPostJsonData } from "../../utility/axios_util";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 const Register = () => {
-    const { token } = useGlobalContext();
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {

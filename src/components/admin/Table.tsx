@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactElement } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TableObjectType } from "./types";
-import { TableProps } from "./TableProps";
+import {  TableInnerData, TableProps } from "./TableProps";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { imageURL, noImage } from "../../utility/constants";
+import { IconProp } from "@fortawesome/fontawesome-svg-core"
 
 
 function Td({
@@ -81,13 +82,13 @@ export default function Table({
                       return (
                         <Td key={JSON.stringify(data[key])} className="whitespace-nowrap  ">
                           <Link
-                            to={data[key].url}
+                            to={data[key].url as string}
                             state={data[key].state || ""}
                             className="text-blue-500 hover:text-blue-700 space-x-3"
                             
                           >
-                            {data[key].icon && <FontAwesomeIcon icon={data[key].icon} />}
-                            <span>{data[key].text}</span>
+                            {data[key].icon && <FontAwesomeIcon icon={(data[key].icon) as IconProp} />}
+                            <span>{data[key].text as string}</span>
                           </Link>
                         </Td>
                       )
@@ -98,11 +99,11 @@ export default function Table({
                     ) {
                       return (
                         <Td key={JSON.stringify(data[key])}>
-                          <ul className={data[key]?.className}>
-                            {data[key].values.map((dat : any) => {
+                          <ul className={(data[key]?.className as string)}>
+                            {(data[key].values as any).map((dat : TableInnerData) => {
                               if (
                                 typeof dat == "object" &&
-                                dat.type == TableObjectType.IMAGE
+                                dat.type as TableObjectType == TableObjectType.IMAGE
                               ) {
                                 return (
                                   <li
@@ -110,7 +111,7 @@ export default function Table({
                                   >
                                     {(dat.url && (
                                       <img
-                                        src={dat.url}
+                                        src={dat.url as string}
                                         className={`min-w-[100px] min-h-[65px] ${dat.className}`}
                                       />
                                     )) || (
@@ -128,12 +129,12 @@ export default function Table({
                                 return (
                                   <li key={JSON.stringify(dat)} className="whitespace-nowrap">
                                     <a
-                                      href={dat.url}
+                                      href={dat.url as string}
                                       className="text-blue-500 hover:text-blue-700 space-x-3"
                                       target="_blank"
                                     >
-                                      {dat.icon && <FontAwesomeIcon icon={dat.icon} />}
-                                      <span>{dat.text}</span>
+                                      {dat.icon && <FontAwesomeIcon icon={dat.icon as IconProp} />}
+                                      <span>{dat.text as string}</span>
                                     </a>
                                   </li>
                                 )
@@ -141,9 +142,9 @@ export default function Table({
                               return (
                                 <li
                                   key={JSON.stringify(dat)}
-                                  className={dat.className}
+                                  className={dat.className as string}
                                 >
-                                  {dat}
+                                  {JSON.stringify(dat)}
                                 </li>
                               );
                             })}
@@ -159,7 +160,7 @@ export default function Table({
                         <Td key={JSON.stringify(data[key]) + i + i}>
                           {(data[key].url && (
                             <img
-                              src={data[key].url.startsWith("http") && data[key].url || imageURL + data[key].url}
+                              src={((data[key].url as string).startsWith("http") && data[key].url || imageURL + data[key].url) as string}
                               className="min-w-[100px] w-[100px] min-h-[65px] h-[65px] "
                             />
                           )) || (

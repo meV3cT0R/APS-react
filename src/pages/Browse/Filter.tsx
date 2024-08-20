@@ -3,9 +3,10 @@ import SearchBox from "../../utility/react/SearchBox";
 import Select from "../../components/form/Select";
 import { useEffect, useState } from "react";
 import { axiosGetData } from "../../utility/axios_util";
+import { Category } from "../../types/Category";
 
 const Filter = ({ formik }: { formik: FormikProps<any>, cat?: string | null }) => {
-    const [categories, setCategories] = useState<any[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [brands, setBrands] = useState([]);
 
 

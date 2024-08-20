@@ -3,10 +3,11 @@ import { TableObjectType } from "../../../components/admin/types";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { User } from "../../../types/user";
 
 const Users = () => {
     const { token } = useGlobalContext();
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
     useEffect(() => {
         const func = async () => {
             const res = await axios
@@ -30,7 +31,7 @@ const Users = () => {
             <TableWithPagination 
             columns={["name","username","address","orders"]}
             avoidColumns={["id"]}
-            datas={users.map((data:any)=> {
+            datas={users.map((data:User)=> {
                 return {
                     "id" : data.id,
                     "name" : data.name,

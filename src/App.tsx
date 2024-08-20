@@ -32,13 +32,14 @@ import Profile from './pages/profile/Profile'
 import Details from './pages/profile/Details'
 import History from './pages/profile/History'
 import ChangePassword from './pages/profile/ChangePassword'
+import { User } from './types/user'
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User |null>(null);
 
   const obj = useMemo(()=>{ return {cart, setCart, token, setToken,user,setUser} },[cart,setCart,token,setToken,user,setUser])
 

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const FAB : React.FC<{ style: string, icon: IconDefinition, to: string }> = ({ style, icon, to }) => {
+export const FAB : React.FC<{ style: string, icon: IconDefinition, to: string }> = ({ style, icon, to }) => {
     const navigate = useNavigate();
     return (
         <>
@@ -17,4 +17,3 @@ const FAB : React.FC<{ style: string, icon: IconDefinition, to: string }> = ({ s
     )
 }
 
-export default FAB;
